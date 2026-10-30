@@ -1,0 +1,682 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panti Asuhan Kuntum Teratai - Jakarta Selatan</title>
+    <meta name="description" content="Panti Asuhan Kuntum Teratai: Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya. Melayani anak asuh dan lansia di Tebet, Jakarta Selatan sejak 2004.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-purple: #3A2C5F; 
+            --primary-light: #F8F5FC;
+            --accent-pink: #C7156E; 
+            --accent-green: #2E7D32; 
+            --accent-gold: #D4AF37;
+            --text-dark: #2D2D2D;
+            --text-light: #6B6B6B;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px rgba(58, 44, 95, 0.1);
+            --shadow-lg: 0 20px 40px rgba(58, 44, 95, 0.15);
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body {
+            font-family: 'Poppins', sans-serif; color: var(--text-dark);
+            background-color: var(--white); line-height: 1.7; overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--primary-purple); line-height: 1.3; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 100px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.8rem; margin-bottom: 15px; position: relative; display: inline-block; }
+        .section-header h2::after {
+            content: ''; position: absolute; width: 60px; height: 3px;
+            background: var(--accent-pink); bottom: -10px; left: 50%;
+            transform: translateX(-50%); border-radius: 2px;
+        }
+        .section-header p { color: var(--text-light); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
+
+        .btn {
+            display: inline-block; padding: 14px 32px; border-radius: 50px;
+            font-weight: 500; font-size: 1rem; cursor: pointer; transition: var(--transition);
+            border: none; text-align: center;
+        }
+        .btn-primary { background: var(--accent-pink); color: var(--white); box-shadow: 0 4px 15px rgba(199, 21, 110, 0.3); }
+        .btn-primary:hover { background: #a01058; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(199, 21, 110, 0.4); }
+        .btn-outline { background: transparent; color: var(--primary-purple); border: 2px solid var(--primary-purple); }
+        .btn-outline:hover { background: var(--primary-purple); color: var(--white); }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 50px; width: auto; }
+        .logo-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.3rem; color: var(--primary-purple); line-height: 1.2; }
+        .logo-text span { display: block; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 400; color: var(--accent-pink); letter-spacing: 1px; }
+        
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent-pink); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--primary-purple); cursor: pointer; background: none; border: none; }
+
+        /* --- HERO --- */
+        .hero {
+    height: 100vh;
+    min-height: 600px;
+
+    background:
+        linear-gradient(
+            rgba(58, 44, 95, 0.75),
+            rgba(58, 44, 95, 0.6)
+        ),
+        url("1000415408.jpg")
+        center/cover no-repeat;
+
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+
+         color: var(--white);
+         padding: 0 20px;
+         margin-top: 80px;
+        }
+        .hero-content { max-width: 900px; }
+        .hero-logo { height: 90px; width: auto; margin: 0 auto 25px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+        .hero h1 { font-size: 3.5rem; color: var(--white); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; font-weight: 300; margin-bottom: 40px; opacity: 0.95; font-style: italic; }
+        .hero .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        /* --- TENTANG KAMI --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-text h3 { font-size: 2rem; margin-bottom: 20px; }
+        .about-text p { margin-bottom: 15px; color: var(--text-light); }
+        .about-legal { background: var(--primary-light); padding: 20px; border-left: 4px solid var(--accent-green); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: 25px 0; font-size: 0.9rem; }
+        .visi-misi { display: grid; gap: 15px; margin-top: 30px; }
+        .vm-item { background: var(--white); padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid #eee; }
+        .vm-item h4 { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: var(--primary-purple); font-size: 1.2rem; }
+        .vm-item h4 i { color: var(--accent-green); }
+        .vm-item ul { list-style-type: disc; padding-left: 20px; font-size: 0.9rem; color: var(--text-light); }
+        .vm-item ul li { margin-bottom: 5px; }
+        
+        .about-image { position: relative; }
+        .about-image img { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+        .about-image::before { content: ''; position: absolute; width: 100%; height: 100%; border: 3px solid var(--accent-pink); border-radius: var(--radius-lg); top: 20px; left: -20px; z-index: -1; }
+
+        /* --- LAYANAN --- */
+        .services { background: var(--primary-light); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .service-card { background: var(--white); padding: 40px 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: var(--transition); text-align: center; border-bottom: 4px solid transparent; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); border-bottom-color: var(--accent-pink); }
+        .service-icon { width: 70px; height: 70px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; color: var(--primary-purple); transition: var(--transition); }
+        .service-card:hover .service-icon { background: var(--accent-pink); color: var(--white); }
+
+        /* --- PROGRAM --- */
+        .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .program-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); }
+        .program-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+        .program-img { height: 220px; background-size: cover; background-position: center; position: relative; }
+        .program-tag { position: absolute; top: 20px; left: 20px; background: var(--accent-gold); color: var(--primary-purple); padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .program-body { padding: 30px; }
+        .program-body h3 { margin-bottom: 15px; font-size: 1.5rem; }
+        .program-body p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; }
+        .program-list li { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-dark); align-items: flex-start; }
+        .program-list li i { color: var(--accent-green); margin-top: 5px; }
+
+        /* --- DONASI --- */
+        .donation { background: var(--primary-purple); color: var(--white); }
+        .donation .section-header h2 { color: var(--white); }
+        .donation .section-header p { color: rgba(255,255,255,0.8); }
+        .donation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .donation-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); padding: 40px 30px; border-radius: var(--radius-lg); text-align: center; transition: var(--transition); }
+        .donation-card:hover { background: rgba(255,255,255,0.15); transform: translateY(-5px); }
+        .donation-card i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 20px; }
+        .donation-card h3 { color: var(--white); margin-bottom: 15px; }
+        .donation-card p { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 25px; }
+        .bank-detail { background: rgba(0,0,0,0.2); padding: 15px; border-radius: var(--radius-md); margin-bottom: 20px; }
+        .bank-detail .label { font-size: 0.8rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+        .bank-detail .number { font-size: 1.4rem; font-weight: 600; color: var(--accent-gold); letter-spacing: 1px; }
+        .qr-placeholder { width: 150px; height: 150px; background: #fff; margin: 0 auto 20px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary-purple); font-weight: 600; overflow: hidden; padding: 5px; }
+        .qr-placeholder img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+
+        /* --- TRANSPARANSI --- */
+        .transparency-content { max-width: 850px; margin: 0 auto; }
+        .transparency-box { background: var(--primary-light); padding: 45px 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+        .transparency-box h3 { margin-bottom: 25px; text-align: center; font-size: 1.8rem; }
+        .transparency-box ul li { display: flex; gap: 18px; margin-bottom: 25px; align-items: flex-start; }
+        .transparency-box ul li:last-child { margin-bottom: 0; }
+        .transparency-box ul li i { color: var(--accent-pink); font-size: 1.4rem; margin-top: 4px; }
+        
+        .progress-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--white); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .progress-table th { background: var(--primary-purple); color: var(--white); padding: 15px; text-align: left; font-size: 0.9rem; }
+        .progress-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .progress-table tr:last-child td { border-bottom: none; }
+        .badge { padding: 5px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+        .badge-success { background: #E8F5E9; color: var(--accent-green); }
+        .badge-process { background: #FFF3E0; color: #E65100; }
+
+        /* --- STRUKTUR PENGURUS & ANAK --- */
+        .team-section { background: var(--white); }
+        .team-grid-inti { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .team-card { text-align: center; background: var(--white); padding: 30px 20px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: var(--transition); border-top: 4px solid var(--accent-pink); }
+        .team-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .team-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; border: 4px solid var(--primary-light); background: #ddd; }
+        .team-card h4 { margin-bottom: 5px; font-size: 1.1rem; }
+        .team-card .role { color: var(--accent-green); font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
+        
+        .seksi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .seksi-card { background: var(--primary-light); padding: 20px; border-radius: var(--radius-md); border-left: 4px solid var(--primary-purple); }
+        .seksi-card h5 { font-family: 'Poppins', sans-serif; font-size: 1rem; color: var(--primary-purple); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .seksi-card p { font-size: 0.9rem; color: var(--text-dark); }
+
+        .children-section { background: var(--primary-light); padding: 40px; border-radius: var(--radius-lg); }
+        .children-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; margin-top: 30px; }
+        .stat-item { background: var(--white); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+        .stat-item h3 { font-size: 2.5rem; color: var(--accent-pink); }
+        .stat-item p { font-size: 0.85rem; color: var(--text-light); font-weight: 500; }
+
+        /* --- GALERI --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .gallery-item { position: relative; border-radius: var(--radius-md); overflow: hidden; cursor: pointer; height: 250px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(58, 44, 95, 0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: var(--transition); }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay i { color: var(--white); font-size: 2rem; }
+        
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 85vh; border-radius: var(--radius-md); }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--white); font-size: 2.5rem; cursor: pointer; background: none; border: none; }
+
+        /* --- KONTAK --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info-list li { display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start; }
+        .contact-info-list .icon { width: 50px; height: 50px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-purple); flex-shrink: 0; font-size: 1.2rem; }
+        .contact-info-list h4 { margin-bottom: 5px; }
+        .contact-info-list p, .contact-info-list a { color: var(--text-light); font-size: 0.95rem; }
+        .contact-info-list a:hover { color: var(--accent-pink); }
+        
+        .map-container { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); height: 100%; min-height: 400px; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary-purple); color: rgba(255,255,255,0.7); padding: 60px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand img { height: 50px; margin-bottom: 20px; filter: brightness(0) invert(1); }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.8; }
+        .footer-links h4 { color: var(--white); margin-bottom: 20px; }
+        .footer-links ul li { margin-bottom: 10px; }
+        .footer-links ul li a { font-size: 0.9rem; transition: var(--transition); }
+        .footer-links ul li a:hover { color: var(--accent-pink); }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.85rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .about-grid, .transparency-content, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-image { order: -1; }
+            .hero h1 { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--white); flex-direction: column; padding: 20px; box-shadow: var(--shadow-md); }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .section-header h2 { font-size: 2rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .progress-table { font-size: 0.8rem; }
+        }
+
+        /* Animasi Scroll */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                <div class="logo-text">Kuntum Teratai<span>PSAA JAKARTA SELATAN</span></div>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#tentang" onclick="toggleMenu()">Tentang</a></li>
+                <li><a href="#layanan" onclick="toggleMenu()">Layanan</a></li>
+                <li><a href="#program" onclick="toggleMenu()">Program</a></li>
+                <li><a href="#donasi" onclick="toggleMenu()">Donasi</a></li>
+                <li><a href="pengurus.html">Pengurus & Anak Asuh</a></li>
+                <li><a href="galeri.html">Galeri</a></li>
+                <li><a href="#kontak" onclick="toggleMenu()">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai" class="hero-logo">
+            <h1>Panti Asuhan Kuntum Teratai</h1>
+            <p>"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya"</p>
+            <div class="btn-group">
+                <a href="#donasi" class="btn btn-primary"><i class="fas fa-heart"></i> Salurkan Donasi</a>
+                <a href="#tentang" class="btn btn-outline" style="color:#fff; border-color:#fff;">Kenali Kami</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- TENTANG KAMI -->
+    <section id="tentang" class="section-padding">
+        <div class="container">
+            <div class="about-grid reveal">
+                <div class="about-text">
+                    <h3>Menebar Manfaat Sejak 2004</h3>
+                    <p>Berawal dari keinginan meneruskan jejak orang tua, <strong>Nina Agustina</strong> merintis Panti Asuhan Kuntum Teratai. Pada tahun 2004, kegiatan dimulai dengan mendirikan sekolah Raudhatul Athfal (RA) gratis di kediamannya di Kebon Baru, Tebet. Hingga kini, Kuntum Teratai terus berkomitmen untuk mendedikasikan diri sebagai lembaga yang ikut serta dalam tumbuh kembang anak dan menjaga kesejahteraan lansia, khususnya untuk masyarakat di area tinggal bantaran Sungai Ciliwung.</p>
+                    
+                    <div class="about-legal">
+                        <i class="fas fa-balance-scale" style="color: var(--accent-green); margin-right: 10px;"></i>
+                        <strong>Legalitas Resmi:</strong> Yayasan Kuntum Teratai merupakan Lembaga Sosial yang dikukuhkan pemerintah melalui <strong>SK. Kemenkumham Nomor AHU-0000784.AH.01.05 Tahun 2024</strong> dan <strong>Surat Izin Kegiatan Yayasan Sosial di Nomor 1/F.3/31.74.01.1005.03.015.R.4/4/-1.848/e/2022</strong> dengan masa berlaku surat sampai dengan tahun 2027.
+                    </div>
+
+                    <div class="visi-misi">
+                        <div class="vm-item">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Memenuhi Kebutuhan tumbuh kembang anak yang berupa perlindungan dan kasih sayang kepada anak yatim, piatu, anak terlantar dan tidak mampu sehingga dapat tumbuh dan berkembang secara baik sebagai tunas-tunas bangsa dan negara dan sejajar dengan anak-anak lainnya yang hidup layak dan normal.</p>
+                        </div>
+                        <div class="vm-item">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul>
+                                <li>Memberi perlindungan kasih sayang pada anak-anak yang tidak/kurang didapatnya dari keluarga / lingkungan.</li>
+                                <li>Memberi Pendidikan anak baik secara non-formal maupun formal, sesuai dengan taraf usia anak.</li>
+                                <li>Memberi kesejahteraan anak, berupa makan dan minum, rambahan gizi, kesehatan maupun bermain.</li>
+                                <li>Memberi perlindungan naungan tempat tinggal yang layak.</li>
+                                <li>Ikut memberi andil dalam penyiapan tunas-tunas Bangsa dan Negara yang sholeh/sholehah, sehat, kuat, cerdas, dan berakhlak.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="1000415345.jpg" alt="Kegiatan belajar anak-anak Panti Asuhan Kuntum Teratai">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOKUS LAYANAN -->
+    <section id="layanan" class="services section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Fokus Layanan</h2>
+                <p>Pilar utama pelayanan kami untuk masyarakat sekitar dan anak asuh.</p>
+            </div>
+            <div class="services-grid reveal">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-home"></i></div>
+                    <h4>Panti Asuhan</h4>
+                    <p>Menyediakan hunian sementara yang aman dan layak bagi 36 anak asuh dari keluarga kurang mampu.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h4>Non-Panti Asuhan</h4>
+                    <p>Program <em>day care</em> gratis bagi 25 anak-anak warga sekitar yang orang tuanya bekerja sebagai buruh atau ART.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-child"></i></div>
+                    <h4>PAUD & RA</h4>
+                    <p>Pendidikan Anak Usia Dini (10 peserta) dan Raudhatul Athfal (17 peserta) berbasis gratis untuk mempersiapkan anak masuk ke jenjang Sekolah Dasar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAM & KEGIATAN -->
+    <section id="program" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Program & Kegiatan</h2>
+                <p>Berbagai inisiatif untuk menghadirkan kebahagiaan dan edukasi bagi anak asuh.</p>
+            </div>
+            <div class="program-grid reveal">
+                <!-- Program Ramadan -->
+                <div class="program-card">
+                    <div class="program-img" style="background-image: url('IMG-20261028-WA0103.jpg');">
+                        <span class="program-tag">Ramadan</span>
+                    </div>
+                    <div class="program-body">
+                        <h3>Program Ramadan Berkah</h3>
+                        <p>Rangkaian kegiatan spesial di bulan suci untuk mempererat kebersamaan dan berbagi rezeki.</p>
+                        <ul class="program-list">
+                            <li><i class="fas fa-check-circle"></i> Buka & Sahur Bersama</li>
+                            <li><i class="fas fa-check-circle"></i> Donasi Pangan & Sembako</li>
+                            <li><i class="fas fa-check-circle"></i> Kajian & Pembinaan Rohani</li>
+                            <li><i class="fas fa-check-circle"></i> Prakarya & Kreativitas Anak</li>
+                            <li><i class="fas fa-check-circle"></i> Penyaluran Zakat & Parcel Lebaran</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Program Rekreasi -->
+                <div class="program-card">
+                    <div class="program-img" style="background-image: url('1000415392.jpg');">
+                        <span class="program-tag">Edukasi</span>
+                    </div>
+                    <div class="program-body">
+                        <h3>Rekreasi Edukatif</h3>
+                        <p>Program rekreasi yang tidak hanya menyenangkan, tetapi juga memberikan wawasan baru bagi anak-anak asuh.</p>
+                        <ul class="program-list">
+                            <li><i class="fas fa-check-circle"></i> Kunjungan ke Museum & Kebun Binatang</li>
+                            <li><i class="fas fa-check-circle"></i> Outbound & Permainan Tradisional</li>
+                            <li><i class="fas fa-check-circle"></i> Workshop Kerajinan Tangan</li>
+                            <li><i class="fas fa-check-circle"></i> Pentas Seni Akhir Tahun</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Program TPA -->
+                <div class="program-card">
+                    <div class="program-img" style="background-image: url('IMG-20261028-WA0099.jpg');">
+                        <span class="program-tag">Pendidikan</span>
+                    </div>
+                    <div class="program-body">
+                        <h3>Taman Pendidikan Al-Quran (TPA)</h3>
+                        <p>Program pembelajaran membaca Al-Quran dan dasar-dasar ilmu agama Islam untuk 30 peserta didik dari tingkat TK hingga SD.</p>
+                        <ul class="program-list">
+                            <li><i class="fas fa-check-circle"></i> Iqro & Tahsin</li>
+                            <li><i class="fas fa-check-circle"></i> Hafalan Surat Pendek</li>
+                            <li><i class="fas fa-check-circle"></i> Praktik Ibadah Harian</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHANNEL DONASI -->
+    <section id="donasi" class="donation section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Salurkan Kebaikan Anda</h2>
+                <p>Setiap bantuan Anda sangat berarti bagi keberlangsungan pendidikan dan kehidupan anak asuh kami.</p>
+            </div>
+            <div class="donation-grid reveal">
+                <!-- Direct Visit -->
+                <div class="donation-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Direct Visit</h3>
+                    <p>Anda dapat datang langsung untuk menyalurkan bantuan secara transparan dan bertemu langsung dengan anak-anak asuh.</p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: var(--radius-md); font-size: 0.9rem;">
+                        <p><strong>Alamat:</strong><br>Jl. Kampung Melayu III No. 29, RT/RW 05/09, Bukit Duri, Tebet, Jakarta Selatan 12840</p>
+                    </div>
+                </div>
+                <!-- Transfer Bank -->
+                <div class="donation-card">
+                    <i class="fas fa-university"></i>
+                    <h3>Transfer Bank</h3>
+                    <p>Salurkan donasi melalui transfer ke rekening resmi yayasan.</p>
+                    <div class="bank-detail">
+                        <div class="label">Bank Mandiri</div>
+                        <div class="number">124.00.0462903-7</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;">a.n. Yayasan Kuntum Teratai</div>
+                    </div>
+                    <p style="font-size: 0.8rem; opacity: 0.7;">*Mohon konfirmasi bukti transfer ke WhatsApp pengurus.</p>
+                </div>
+                <!-- QRIS -->
+                <div class="donation-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>QRIS Resmi</h3>
+                    <p>Scan kode QRIS untuk donasi cepat dan aman melalui e-wallet atau mobile banking.</p>
+                    <div class="qr-placeholder">
+                        <img src="Screenshot 2026-10-26 163106.png"
+                            alt="QR Code"
+                            class="qr-image">
+                    </div>
+                    <p style="font-size: 0.8rem; opacity: 0.7;">Gunakan aplikasi apa pun yang mendukung QRIS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRANSPARANSI & AKUNTABILITAS -->
+    <section id="transparansi" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Transparansi & Akuntabilitas</h2>
+                <p>Kami berkomitmen untuk mengelola setiap donasi secara terbuka dan dapat dipertanggungjawabkan.</p>
+            </div>
+            <div class="transparency-content reveal">
+                <div class="transparency-box">
+                    <h3>Komitmen Kami</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <div>
+                                <strong>Laporan Keuangan Berkala</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-light);">Laporan penggunaan dana dipublikasikan secara rutin kepada donatur dan publik.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-camera-retro"></i>
+                            <div>
+                                <strong>Dokumentasi Kegiatan</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-light);">Setiap penyaluran bantuan didokumentasikan dan dibagikan sebagai bentuk bukti nyata.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-user-shield"></i>
+                            <div>
+                                <strong>Audit Internal</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-light);">Pengurus melakukan pemeriksaan internal secara berkala untuk memastikan akuntabilitas.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STRUKTUR PENGURUS & ANAK ASUH (DIPINDAHKAN KE HALAMAN KHUSUS) -->
+    <section id="pengurus" class="team-section section-padding" style="background: linear-gradient(135deg, #FDFBFF 0%, #F5F0FB 100%);">
+        <div class="container">
+            <div class="reveal" style="text-align: center; max-width: 800px; margin: 0 auto; background: var(--white); padding: 50px 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border-top: 5px solid var(--accent-pink);">
+                <div style="width: 75px; height: 75px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: var(--primary-purple);">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <h2 style="font-size: 2.3rem; margin-bottom: 15px;">Struktur Pengurus & Anak Asuh</h2>
+                <p style="color: var(--text-light); font-size: 1.05rem; margin-bottom: 30px; line-height: 1.8;">
+                    Bagian struktur kepengurusan yayasan, seksi-seksi operasional, serta kanvas profil dan galeri foto anak-anak asuh telah dipindahkan ke halaman tersendiri dengan kanvas foto yang siap Anda lengkapi.
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="pengurus.html" class="btn btn-primary" style="padding: 14px 35px; font-size: 1.05rem;">
+                        <i class="fas fa-arrow-right"></i> Buka Halaman Pengurus & Anak Asuh
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI & DOKUMENTASI (DIPINDAHKAN KE HALAMAN KHUSUS) -->
+    <section id="galeri" class="section-padding" style="background: var(--primary-light);">
+        <div class="container">
+            <div class="reveal" style="text-align: center; max-width: 850px; margin: 0 auto; background: var(--white); padding: 50px 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border-top: 5px solid var(--accent-pink);">
+                <div style="width: 75px; height: 75px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: var(--accent-pink);">
+                    <i class="fas fa-images"></i>
+                </div>
+                <h2 style="font-size: 2.3rem; margin-bottom: 15px;">Galeri & Dokumentasi Kegiatan</h2>
+                <p style="color: var(--text-light); font-size: 1.05rem; margin-bottom: 25px; line-height: 1.8;">
+                    Dokumentasi foto kegiatan kini ditampilkan dalam bentuk <strong>album kolase interaktif yang dapat di-scroll</strong> dan diperbarui setiap pekannya: mulai dari Update Mingguan Terbaru, Ramadan Berkah, Pendidikan & TPA, Rekreasi Edukatif, hingga Kunjungan Donatur.
+                </p>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+                    <span style="background: var(--primary-light); color: var(--primary-purple); padding: 6px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 500;"><i class="fas fa-moon"></i> Ramadan</span>
+                    <span style="background: var(--primary-light); color: var(--primary-purple); padding: 6px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 500;"><i class="fas fa-graduation-cap"></i> Pendidikan & TPA</span>
+                    <span style="background: var(--primary-light); color: var(--primary-purple); padding: 6px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 500;"><i class="fas fa-bus-alt"></i> Rekreasi</span>
+                    <span style="background: var(--primary-light); color: var(--primary-purple); padding: 6px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 500;"><i class="fas fa-hand-holding-heart"></i> Baksos Donatur</span>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="galeri.html" class="btn btn-primary" style="padding: 14px 35px; font-size: 1.05rem;">
+                        <i class="fas fa-camera"></i> Buka Galeri Dokumentasi Lengkap
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img src="" alt="Zoomed Image" id="lightboxImg">
+    </div>
+
+    <!-- HUBUNGI KAMI -->
+    <section id="kontak" class="section-padding" style="background: #fff;">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Hubungi Kami</h2>
+                <p>Kami terbuka untuk pertanyaan, kunjungan, dan kolaborasi.</p>
+            </div>
+            <div class="contact-grid reveal">
+                <div>
+                    <ul class="contact-info-list">
+                        <li>
+                            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h4>Alamat</h4>
+                                <p>Jl. Kampung Melayu III No. 29, RT/RW 05/09,<br>Bukit Duri, Kec. Tebet, Jakarta Selatan 12840</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                            <div>
+                                <h4>Telepon</h4>
+                                <p>0812-8179-8653 | 0878-8017-8000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:pantikuntumteratai@gmail.com">pantikuntumteratai@gmail.com</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                            <div>
+                                <h4>WhatsApp Admin</h4>
+                                <a href="https://api.whatsapp.com/send/?phone=6281281798653&text&type=phone_number&app_absent=0&wame_ctl=1&fbclid=PAT01DUAVK0mpleHRuA2FlbQIxMABwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp4dhA5iklqAj7Wru6Ms8UuRFqwwAF3IasnW3yMzqGE_xzymvmG4jyRFcxkzv_aem_saNGrZpWoUdiXJZh0uwzQw" target="_blank" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem; margin-top: 10px;"><i class="fab fa-whatsapp"></i> Chat via WhatsApp</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps?q=Panti+Asuhan+Kuntum+Teratai,+Jl.+Kp.+Melayu+Kecil+3+No.29,+RT.5/RW.9,+Bukit+Duri,+Tebet,+South+Jakarta+City,+Jakarta+12840&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                    <p>Yayasan Kuntum Teratai adalah lembaga sosial yang berdedikasi untuk menaungi anak asuh dan lansia di bantaran Sungai Ciliwung, Jakarta Selatan.</p>
+                    <p style="margin-top: 15px; font-style: italic; color: var(--accent-gold);">"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya"</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="#tentang">Tentang Kami</a></li>
+                        <li><a href="#layanan">Layanan</a></li>
+                        <li><a href="#program">Program</a></li>
+                        <li><a href="#donasi">Donasi</a></li>
+                        <li><a href="pengurus.html">Pengurus & Anak Asuh</a></li>
+                        <li><a href="galeri.html">Galeri & Dokumentasi</a></li>
+                        <li><a href="login.html" style="color:var(--accent-pink); font-weight:500;"><i class="fas fa-lock"></i> Portal Pengurus</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legalitas</h4>
+                    <ul>
+                        <li><a href="#">SK Kemenkumham No. AHU-0000784.AH.01.05 Tahun 2024</a></li>
+                        <li><a href="#">Izin Dinas Sosial No. 1/F.3/31.74.01.1005.03.015.R.4/4/-1.848/e/2022</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yayasan Kuntum Teratai. All Rights Reserved. | Dibuat dengan <i class="fas fa-heart" style="color: var(--accent-pink);"></i> untuk sesama.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Trigger on load
+
+        // Lightbox Functionality
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close lightbox on click outside image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+    </script>
+
+</body>
+</html>

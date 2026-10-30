@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pengelola Dokumentasi - Panti Asuhan Kuntum Teratai</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        :root {
+            --primary-purple: #3A2C5F;
+            --primary-light: #F8F5FC;
+            --accent-pink: #C7156E;
+            --accent-green: #2E7D32;
+            --accent-gold: #D4AF37;
+            --text-dark: #2D2D2D;
+            --text-light: #6B6B6B;
+            --white: #FFFFFF;
+            --border-color: #E8E1F0;
+            --shadow-sm: 0 4px 12px rgba(58, 44, 95, 0.06);
+            --shadow-md: 0 10px 28px rgba(58, 44, 95, 0.1);
+            --shadow-lg: 0 18px 45px rgba(58, 44, 95, 0.15);
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --transition: all 0.25s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F6FB;
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        /* Top Header Navbar */
+        .dash-nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-purple);
+        }
+        .nav-brand img { height: 44px; width: auto; }
+        .nav-brand-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.18rem;
+            line-height: 1.2;
+        }
+        .nav-brand-title span {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.72rem;
+            color: var(--accent-pink);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-badge {
+            background: #EDE6F7;
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            color: var(--primary-purple);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .role-pill {
+            background: var(--accent-pink);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #D9CEE8;
+            color: #C7156E;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        .btn-logout:hover {
+            background: #FDF2F4;
+            border-color: #C7156E;
+        }
+
+        /* Container Main */
+        .dash-main {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: var(--white);
+            padding: 22px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+        .stat-icon.purple { background: #EDE6F7; color: var(--primary-purple); }
+        .stat-icon.pink { background: #FDE8F1; color: var(--accent-pink); }
+        .stat-icon.green { background: #E8F5E9; color: var(--accent-green); }
+        .stat-icon.gold { background: #FFF9E6; color: var(--accent-gold); }
+        .stat-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            line-height: 1.1;
+        }
+        .stat-info p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Toolbar & Controls */
+        .toolbar {
+            background: var(--white);
+            padding: 20px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .search-filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+        }
+        .search-box-admin {
+            position: relative;
+            min-width: 250px;
+        }
+        .search-box-admin i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9D92B6;
+            font-size: 0.9rem;
+        }
+        .search-input-admin {
+            width: 100%;
+            padding: 9px 16px 9px 38px;
+            border: 1px solid #D6CCE4;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.88rem;
+            background: #FCFAFE;
+            transition: var(--transition);
+        }
+        .search-input-admin:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(199, 21, 110, 0.12);
+        }
+        .status-filter-pills {
+            display: flex;
+            gap: 6px;
+        }
+        .pill-btn {
+            background: #F4EFF9;
+            border: none;
+            color: var(--primary-purple);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .pill-btn.active {
+            background: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .btn-add-album {
+            background: var(--accent-pink);
+            color: var(--white);
+            border: none;
+            padding: 11px 24px;
+            border-radius: 30px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(199, 21, 110, 0.28);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .btn-add-album:hover {
+            background: #A01058;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(199, 21, 110, 0.35);
+        }
+
+        /* Album Grid */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+        .album-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        .album-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: #D6CCE4;
+        }
+        .album-cover-wrap {
+            height: 195px;
+            position: relative;
+            background: #EDE6F7;
+            overflow: hidden;
+        }
+        .album-cover-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .status-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-badge.published { background: #E8F5E9; color: var(--accent-green); }
+        .status-badge.draft { background: #FFF3E0; color: #E65100; }
+        .album-photo-count {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(18, 11, 33, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .album-body {
+            padding: 20px 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .album-date {
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .album-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .album-desc {
+            font-size: 0.86rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .album-actions {
+            border-top: 1px solid #F3EEF9;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-act {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            color: var(--text-dark);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+        }
+        .btn-act:hover {
+            background: #F4EFF9;
+            border-color: var(--primary-purple);
+            color: var(--primary-purple);
+        }
+        .btn-act.primary-light {
+            background: #EDE6F7;
+            color: var(--primary-purple);
+            font-weight: 600;
+            border-color: #D6CCE4;
+        }
+        .btn-act.primary-light:hover {
+            background: var(--primary-purple);
+            color: var(--white);
+        }
+        .btn-act.danger:hover {
+            background: #FDF2F4;
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        /* --- MODAL DIALOGS --- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 11, 33, 0.75);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; }
+        .modal-box {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 720px;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            position: relative;
+        }
+        .modal-box.large { max-width: 900px; }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #EFE9F6;
+            padding-bottom: 15px;
+        }
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            color: var(--primary-purple);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: #999;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .modal-close:hover { color: var(--accent-pink); }
+
+        .form-section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+            margin: 20px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #F3EEF9;
+            padding-bottom: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--primary-purple);
+        }
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #D6CCE4;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            background: #FAF8FD;
+            transition: var(--transition);
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(199, 21, 110, 0.1);
+        }
+
+        /* --- MODERN DRAG & DROP UPLOAD ZONE --- */
+        .dropzone {
+            border: 2px dashed #C5B9DB;
+            background: #FAF7FE;
+            border-radius: var(--radius-md);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        .dropzone:hover, .dropzone.dragover {
+            border-color: var(--accent-pink);
+            background: #FFF5F9;
+            transform: scale(1.01);
+        }
+        .dropzone i {
+            font-size: 2.4rem;
+            color: var(--accent-pink);
+            margin-bottom: 10px;
+        }
+        .dropzone h4 {
+            font-size: 1rem;
+            color: var(--primary-purple);
+            margin-bottom: 4px;
+        }
+        .dropzone p {
+            color: var(--text-light);
+            font-size: 0.82rem;
+            margin-top: 4px;
+        }
+
+        /* Thumbnail Previews of Staged Files Before Upload */
+        .staged-preview-section {
+            margin: 15px 0 25px;
+        }
+        .staged-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 8px;
+            background: #F9F6FC;
+            border-radius: 12px;
+            border: 1px solid #EBE4F4;
+        }
+        .staged-thumb-item {
+            position: relative;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #E2D9EE;
+            background: #fff;
+            transition: var(--transition);
+        }
+        .staged-thumb-item.is-cover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--accent-gold);
+        }
+        .staged-thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .staged-badge-cover {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: var(--accent-gold);
+            color: var(--primary-purple);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 12px;
+            display: none;
+        }
+        .staged-thumb-item.is-cover .staged-badge-cover {
+            display: block;
+        }
+        .staged-btn-cover {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            background: rgba(18, 11, 33, 0.75);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 3px 8px;
+            font-size: 0.68rem;
+            cursor: pointer;
+        }
+        .staged-btn-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(199, 21, 110, 0.85);
+            color: var(--white);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Photos Management in Album Modal */
+        .photo-manage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            max-height: 420px;
+            overflow-y: auto;
+            padding: 6px;
+        }
+        .manage-photo-card {
+            background: var(--white);
+            border: 1px solid #E2D9EE;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .manage-photo-card.is-cover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--accent-gold);
+        }
+        .manage-thumb-img {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .manage-card-body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .caption-input-small {
+            width: 100%;
+            font-size: 0.78rem;
+            padding: 5px 8px;
+            border: 1px solid #D6CCE4;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+        .manage-card-btns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .btn-mini {
+            padding: 4px 8px;
+            font-size: 0.72rem;
+            border-radius: 6px;
+            border: 1px solid #D6CCE4;
+            background: #F4EFF9;
+            color: var(--primary-purple);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-mini:hover {
+            background: var(--primary-purple);
+            color: var(--white);
+        }
+        .btn-mini.danger:hover {
+            background: #C7156E;
+            color: var(--white);
+            border-color: #C7156E;
+        }
+
+        /* Progress Bar */
+        .progress-box {
+            display: none;
+            margin: 15px 0;
+            background: #EDE6F7;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 12px;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-pink);
+            transition: width 0.3s ease;
+        }
+
+        /* Toast Feedback */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary-purple);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 35px;
+            font-size: 0.92rem;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 2500;
+        }
+        .toast.success { background: #2E7D32; }
+        .toast.error { background: #C7156E; }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .search-filter-group { flex-direction: column; align-items: stretch; }
+            .search-box-admin { width: 100%; }
+            .btn-add-album { justify-content: center; width: 100%; }
+            .albums-grid { grid-template-columns: 1fr; }
+            .album-actions { flex-direction: column; align-items: stretch; }
+            .btn-act { justify-content: center; }
+            .modal-box { padding: 20px 16px; }
+            .photo-manage-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="dash-nav">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">
+                <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                <div class="nav-brand-title">
+                    Kuntum Teratai
+                    <span>DASHBOARD DOKUMENTASI</span>
+                </div>
+            </a>
+            <div class="user-actions">
+                <div class="user-badge">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userEmail">Memuat...</span>
+                    <span id="userRolePill" class="role-pill">ADMIN</span>
+                </div>
+                <a href="galeri.html" target="_blank" class="btn-act" title="Buka Halaman Galeri Publik"><i class="fas fa-external-link-alt"></i> Web Publik</a>
+                <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="dash-main">
+        
+        <!-- RINGKASAN STATISTIK -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-folder-open"></i></div>
+                <div class="stat-info">
+                    <h3 id="statTotalAlbums">0</h3>
+                    <p>Total Album Kegiatan</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon pink"><i class="fas fa-images"></i></div>
+                <div class="stat-info">
+                    <h3 id="statTotalPhotos">0</h3>
+                    <p>Total Foto Tersimpan</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-globe"></i></div>
+                <div class="stat-info">
+                    <h3 id="statPublished">0</h3>
+                    <p>Album Tayang (Publik)</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon gold"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <h3 id="statDraft">0</h3>
+                    <p>Draft / Disimpan</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOOLBAR & PENCARIAN -->
+        <div class="toolbar">
+            <div class="search-filter-group">
+                <div class="search-box-admin">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="adminSearchInput" class="search-input-admin" placeholder="Cari album kegiatan..." oninput="handleAdminSearch()">
+                </div>
+                <div class="status-filter-pills">
+                    <button class="pill-btn active" onclick="filterByStatus('all', this)">Semua Album</button>
+                    <button class="pill-btn" onclick="filterByStatus('published', this)">Tayang (Publik)</button>
+                    <button class="pill-btn" onclick="filterByStatus('draft', this)">Draft</button>
+                    <button id="btnTabAdminManage" class="pill-btn" style="display:none;" onclick="openAdminManagementModal()"><i class="fas fa-users-cog"></i> Pengurus</button>
+                </div>
+            </div>
+            <button class="btn-add-album" onclick="openCreateAlbumModal()">
+                <i class="fas fa-plus-circle"></i> Buat Album Baru
+            </button>
+        </div>
+
+        <!-- DAFTAR KARTU ALBUM -->
+        <div id="albumsGrid" class="albums-grid">
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-light);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2.2rem; color: var(--accent-pink);"></i>
+                <p style="margin-top: 12px;">Memuat data album...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 1: BUAT / EDIT ALBUM DENGAN UPLOAD FOTO TERPADU -->
+    <!-- ======================================================== -->
+    <div id="albumModal" class="modal">
+        <div class="modal-box large">
+            <div class="modal-header">
+                <h3 id="modalAlbumTitle">Buat Album Kegiatan Baru</h3>
+                <button class="modal-close" onclick="closeAlbumModal()">&times;</button>
+            </div>
+            <form id="albumForm" onsubmit="saveAlbumWithStagedPhotos(event)">
+                <input type="hidden" id="albumId">
+
+                <!-- Bagian 1: Informasi Kegiatan -->
+                <div class="form-section-title"><i class="fas fa-info-circle"></i> 1. Informasi Kegiatan</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Judul Kegiatan *</label>
+                    <input type="text" id="albumTitleInput" class="form-input" placeholder="Contoh: Buka Puasa Akbar & Santunan Ramadan 1445 H" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tanggal Pelaksanaan *</label>
+                        <input type="date" id="albumDateInput" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kategori Kegiatan *</label>
+                        <select id="albumCategoryInput" class="form-select">
+                            <option value="mingguan">Update Minggu Ini</option>
+                            <option value="ramadan">Ramadan Berkah</option>
+                            <option value="pendidikan">Pendidikan, RA & TPA</option>
+                            <option value="rekreasi">Rekreasi & Outbound</option>
+                            <option value="donatur">Kunjungan Donatur</option>
+                            <option value="harian">Keseharian Asrama</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Status Publikasi *</label>
+                    <select id="albumStatusInput" class="form-select">
+                        <option value="published">Tayangkan ke Publik (Langsung tampil di website)</option>
+                        <option value="draft">Simpan Sebagai Draft (Hanya terlihat oleh pengurus)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Deskripsi / Cerita Singkat Kegiatan</label>
+                    <textarea id="albumDescInput" class="form-textarea" rows="3" placeholder="Tuliskan suasana kebersamaan, tujuan kegiatan, dan para pihak yang hadir..."></textarea>
+                </div>
+
+                <!-- Bagian 2: Unggah Foto Dokumentasi Sekaligus -->
+                <div class="form-section-title"><i class="fas fa-camera"></i> 2. Foto Dokumentasi Kegiatan</div>
+                
+                <div class="dropzone" id="stagedDropzone" onclick="document.getElementById('stagedPhotoInput').click()">
+                    <i class="fas fa-images"></i>
+                    <h4>Pilih Foto Dokumentasi (Bisa Pilih Banyak Sekaligus)</h4>
+                    <p>Klik di sini atau seret foto langsung dari HP / Laptop Anda.</p>
+                    <small>Format: JPG, PNG, WEBP. Foto otomatis dikompres agar hemat kuota dan cepat dibuka.</small>
+                    <input type="file" id="stagedPhotoInput" multiple accept="image/*" style="display:none;" onchange="handleStagedPhotosSelected(event)">
+                </div>
+
+                <!-- Preview Thumbnail Foto Terpilih Sebelum Upload -->
+                <div id="stagedPreviewSection" class="staged-preview-section" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.85rem; font-weight:600; color:var(--primary-purple);">
+                            Foto yang Dipilih (<span id="stagedCount">0</span> Foto)
+                        </span>
+                        <small style="color:var(--text-light); font-size:0.75rem;">Foto pertama otomatis jadi sampul (klik 'Jadikan Sampul' untuk ganti)</small>
+                    </div>
+                    <div id="stagedPreviewGrid" class="staged-preview-grid">
+                        <!-- Diisi via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Progress Bar Upload -->
+                <div id="uploadProgressBox" class="progress-box">
+                    <div id="uploadProgressFill" class="progress-fill"></div>
+                </div>
+                <div id="uploadStatusText" style="font-size:0.85rem; color:var(--accent-pink); margin-bottom:12px; text-align:center; display:none; font-weight:500;"></div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 25px; border-top:1px solid #EFE9F6; padding-top:18px;">
+                    <button type="button" class="btn-act" onclick="closeAlbumModal()">Batal</button>
+                    <button type="submit" id="btnSaveAlbum" class="btn-add-album">
+                        <i class="fas fa-cloud-upload-alt"></i> <span id="btnSaveText">Simpan Album & Unggah Foto</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 2: KELOLA FOTO DI DALAM ALBUM (LIHAT/HAPUS/SAMPUL) -->
+    <!-- ======================================================== -->
+    <div id="managePhotosModal" class="modal">
+        <div class="modal-box large">
+            <div class="modal-header">
+                <div>
+                    <h3 id="manageModalAlbumTitle">Kelola Isi Album</h3>
+                    <p id="manageModalAlbumSub" style="font-size:0.85rem; color:var(--text-light); margin-top:2px;"></p>
+                </div>
+                <button class="modal-close" onclick="closeManagePhotosModal()">&times;</button>
+            </div>
+
+            <!-- Upload Tambahan -->
+            <div class="dropzone" style="padding:20px;" onclick="document.getElementById('extraPhotoInput').click()">
+                <i class="fas fa-plus-circle" style="font-size:1.8rem; margin-bottom:6px;"></i>
+                <h4>Tambah Foto Baru ke Album Ini</h4>
+                <p style="font-size:0.8rem;">Pilih satu atau beberapa foto tambahan dari HP / laptop.</p>
+                <input type="file" id="extraPhotoInput" multiple accept="image/*" style="display:none;" onchange="handleUploadExtraPhotos(event)">
+            </div>
+
+            <!-- Progress Bar Extra Upload -->
+            <div id="extraProgressBox" class="progress-box">
+                <div id="extraProgressFill" class="progress-fill"></div>
+            </div>
+            <div id="extraStatusText" style="font-size:0.85rem; color:var(--accent-pink); margin-bottom:10px; text-align:center; display:none;"></div>
+
+            <!-- Grid Foto-Foto Album -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                <h4 style="font-size:0.95rem; color:var(--primary-purple);">
+                    Foto Tersimpan (<span id="managePhotoCount">0</span>)
+                </h4>
+                <small style="color:var(--text-light); font-size:0.75rem;">⭐ Menandakan foto sampul utama album</small>
+            </div>
+
+            <div id="managePhotosGrid" class="photo-manage-grid">
+                <!-- Diisi via JavaScript -->
+            </div>
+
+            <div style="text-align: right; margin-top: 25px; border-top:1px solid #EFE9F6; padding-top:15px;">
+                <button type="button" class="btn-act primary-light" onclick="closeManagePhotosModal()">
+                    <i class="fas fa-check"></i> Selesai Mengelola
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 3: KONFIRMASI HAPUS FOTO (DENGAN PREVIEW FOTO) -->
+    <!-- ======================================================== -->
+    <div id="deletePhotoConfirmModal" class="modal">
+        <div class="modal-box" style="max-width: 440px; text-align: center;">
+            <div style="width:55px; height:55px; background:#FDE8F1; color:var(--accent-pink); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:1.5rem;">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            <h3 style="font-size:1.25rem; color:var(--primary-purple); margin-bottom:8px;">Hapus Foto Ini?</h3>
+            <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">Foto ini akan dihapus secara permanen dari server.</p>
+            <div style="height:150px; border-radius:10px; overflow:hidden; margin-bottom:20px; border:1px solid #EBE4F4;">
+                <img id="deleteConfirmImg" src="" alt="Preview Hapus" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button type="button" class="btn-act" onclick="closeDeleteConfirmModal()">Batal</button>
+                <button type="button" id="btnExecuteDeletePhoto" class="btn-add-album" style="background:#C7156E; padding:8px 20px;">
+                    Ya, Hapus Foto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 4: KELOLA PENGURUS & ADMIN -->
+    <!-- ======================================================== -->
+    <div id="adminModal" class="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Kelola Akses Pengurus</h3>
+                <button class="modal-close" onclick="closeAdminModal()">&times;</button>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--primary-purple);">Tambah Hak Akses Pengurus Baru</h4>
+                <form id="inviteAdminForm" onsubmit="handleAddAdminRole(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email Pengurus</label>
+                            <input type="email" id="newAdminEmail" class="form-input" placeholder="pengurus@kuntumteratai.id" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tingkat Hak Akses</label>
+                            <select id="newAdminRole" class="form-select">
+                                <option value="admin">Admin Organisasi</option>
+                                <option value="owner">Pengelola Utama (Owner)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-add-album" style="padding: 9px 20px; font-size: 0.88rem; border-radius: 8px;">
+                        <i class="fas fa-user-plus"></i> Berikan Hak Akses
+                    </button>
+                </form>
+            </div>
+
+            <h4 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--primary-purple);">Daftar Pengurus Aktif</h4>
+            <div id="adminListContainer" style="font-size: 0.88rem;">
+                Memuat daftar pengurus...
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle" id="toastIcon"></i>
+        <span id="toastMsg">Operasi berhasil.</span>
+    </div>
+
+    <!-- Script Layanan -->
+    <script>
+        // Tanamkan konfigurasi Supabase secara langsung agar dasbor langsung terhubung
+        window.__SUPABASE_URL__ = 'https://rcwlegfvfjnmrzwsjots.supabase.co';
+        window.__SUPABASE_ANON_KEY__ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjd2xlZ2Z2ZmpubXJ6d3Nqb3RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjA0NzcsImV4cCI6MjA4ODA5NjQ3N30.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjd2xlZ2Z2ZmpubXJ6d3Nqb3RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjA0NzcsImV4cCI6MjA4ODA5NjQ3N30';
+    </script>
+    <script src="image-compressor.js"></script>
+    <script src="supabase-config.js"></script>
+    
+    <script>
+        let currentAlbums = [];
+        let activeStatusFilter = 'all';
+        let searchQuery = '';
+        let activeManagingAlbum = null;
+        let currentUser = null;
+        let currentUserRole = null;
+
+        // Array penyimpanan foto yang dipilih sementara sebelum upload
+        let stagedFiles = [];
+        let photoPendingDeletion = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Verifikasi status sesi login admin
+            const isLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true' || 
+                               sessionStorage.getItem('kt_admin_auth') === 'authenticated';
+
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = { email: 'pengurus@kuntumteratai.or.id', id: null };
+            currentUserRole = 'admin';
+
+            const userEmailEl = document.getElementById('userEmail');
+            if (userEmailEl) userEmailEl.textContent = 'Admin Pengurus';
+
+            const userRolePillEl = document.getElementById('userRolePill');
+            if (userRolePillEl) userRolePillEl.textContent = 'ADMIN';
+
+            const btnTabAdminManage = document.getElementById('btnTabAdminManage');
+            if (btnTabAdminManage) {
+                btnTabAdminManage.style.display = 'inline-block';
+            }
+
+            // Drag and drop event listeners
+            setupDragAndDrop();
+
+            await loadAlbums();
+        });
+
+        async function handleLogout() {
+            if (confirm('Apakah Anda yakin ingin keluar dari portal admin?')) {
+                sessionStorage.removeItem('isAdminLoggedIn');
+                sessionStorage.removeItem('kt_admin_auth');
+                if (window.supabaseService && typeof window.supabaseService.logout === 'function') {
+                    try { await window.supabaseService.logout(); } catch(e) {}
+                }
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Setup Drag & Drop
+        function setupDragAndDrop() {
+            const dropzone = document.getElementById('stagedDropzone');
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+            function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'), false);
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'), false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files && files.length) {
+                    processSelectedFiles(Array.from(files));
+                }
+            });
+        }
+
+        // --- LOAD DATA ALBUM DARI SUPABASE ---
+        async function loadAlbums() {
+            try {
+                currentAlbums = await window.supabaseService.getAllAlbumsAdmin();
+                renderStats();
+                renderAlbums();
+            } catch (err) {
+                console.error(err);
+                showToast('Gagal memuat album: ' + err.message, 'error');
+            }
+        }
+
+        function renderStats() {
+            const total = currentAlbums.length;
+            const published = currentAlbums.filter(a => a.status === 'published').length;
+            const draft = total - published;
+            let totalPhotos = 0;
+            currentAlbums.forEach(a => {
+                totalPhotos += (a.album_photos ? a.album_photos.length : 0);
+            });
+
+            document.getElementById('statTotalAlbums').textContent = total;
+            document.getElementById('statTotalPhotos').textContent = totalPhotos;
+            document.getElementById('statPublished').textContent = published;
+            document.getElementById('statDraft').textContent = draft;
+        }
+
+        function filterByStatus(status, btn) {
+            activeStatusFilter = status;
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderAlbums();
+        }
+
+        function handleAdminSearch() {
+            searchQuery = document.getElementById('adminSearchInput').value.toLowerCase().trim();
+            renderAlbums();
+        }
+
+        function renderAlbums() {
+            const grid = document.getElementById('albumsGrid');
+            grid.innerHTML = '';
+
+            let filtered = currentAlbums.filter(album => {
+                const matchStatus = (activeStatusFilter === 'all' || album.status === activeStatusFilter);
+                const matchSearch = !searchQuery || 
+                    album.title.toLowerCase().includes(searchQuery) || 
+                    (album.description && album.description.toLowerCase().includes(searchQuery));
+                return matchStatus && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: #fff; border-radius: 12px; border: 1px dashed #D6CCE4;">
+                        <i class="fas fa-folder-open" style="font-size: 2.6rem; color: #C5B9DB; margin-bottom: 12px;"></i>
+                        <h4 style="color: var(--primary-purple); font-size: 1.15rem;">Tidak ada album yang sesuai</h4>
+                        <p style="font-size: 0.88rem; color: var(--text-light); margin-top: 4px;">Klik tombol "Buat Album Baru" untuk menambahkan dokumentasi kegiatan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(album => {
+                const photosCount = album.album_photos ? album.album_photos.length : 0;
+                const coverImg = album.cover_url || (album.album_photos && album.album_photos[0] ? album.album_photos[0].photo_url : 'Screenshot 2026-10-25 185825.png');
+
+                const card = document.createElement('div');
+                card.className = 'album-card';
+                card.innerHTML = `
+                    <div class="album-cover-wrap">
+                        <img src="${coverImg}" alt="${escapeHtml(album.title)}" onerror="this.src='Screenshot 2026-10-25 185825.png'">
+                        <span class="status-badge ${album.status}">${album.status === 'published' ? 'Tayang (Publik)' : 'Draft'}</span>
+                        <span class="album-photo-count"><i class="fas fa-camera"></i> ${photosCount} Foto</span>
+                    </div>
+                    <div class="album-body">
+                        <div>
+                            <div class="album-date"><i class="far fa-calendar-alt"></i> ${album.event_date}</div>
+                            <h4 class="album-title">${escapeHtml(album.title)}</h4>
+                            <p class="album-desc">${escapeHtml(album.description || 'Tidak ada keterangan.')}</p>
+                        </div>
+                        <div class="album-actions">
+                            <button class="btn-act primary-light" onclick="openManagePhotosModal('${album.id}')">
+                                <i class="fas fa-images"></i> Kelola Foto (${photosCount})
+                            </button>
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn-act" onclick="openEditAlbumModal('${album.id}')" title="Ubah Info Album">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-act danger" onclick="deleteAlbum('${album.id}')" title="Hapus Album">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- SISTEM PEMILIHAN & PREVIEW FOTO SEBELUM UPLOAD ---
+        function handleStagedPhotosSelected(event) {
+            const files = Array.from(event.target.files);
+            processSelectedFiles(files);
+            event.target.value = ''; // reset input
+        }
+
+        function processSelectedFiles(files) {
+            if (!files || !files.length) return;
+
+            files.forEach(file => {
+                if (!file.type.match(/image.*/)) return;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const isFirst = stagedFiles.length === 0;
+                    stagedFiles.push({
+                        file: file,
+                        previewUrl: e.target.result,
+                        isCover: isFirst, // Foto pertama otomatis jadi cover
+                        name: file.name
+                    });
+                    renderStagedPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderStagedPreviews() {
+            const section = document.getElementById('stagedPreviewSection');
+            const grid = document.getElementById('stagedPreviewGrid');
+            const countLabel = document.getElementById('stagedCount');
+
+            if (stagedFiles.length === 0) {
+                section.style.display = 'none';
+                grid.innerHTML = '';
+                return;
+            }
+
+            section.style.display = 'block';
+            countLabel.textContent = stagedFiles.length;
+            grid.innerHTML = '';
+
+            stagedFiles.forEach((item, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `staged-thumb-item ${item.isCover ? 'is-cover' : ''}`;
+                thumb.innerHTML = `
+                    <span class="staged-badge-cover">Sampul</span>
+                    <img src="${item.previewUrl}" alt="Preview Foto">
+                    <button type="button" class="staged-btn-cover" onclick="setStagedCover(${index})">
+                        ${item.isCover ? '⭐ Sampul' : 'Pilih Sampul'}
+                    </button>
+                    <button type="button" class="staged-btn-remove" onclick="removeStagedPhoto(${index})" title="Batal pilih foto ini">&times;</button>
+                `;
+                grid.appendChild(thumb);
+            });
+        }
+
+        function setStagedCover(index) {
+            stagedFiles.forEach((item, idx) => {
+                item.isCover = (idx === index);
+            });
+            renderStagedPreviews();
+        }
+
+        function removeStagedPhoto(index) {
+            const wasCover = stagedFiles[index].isCover;
+            stagedFiles.splice(index, 1);
+            if (wasCover && stagedFiles.length > 0) {
+                stagedFiles[0].isCover = true;
+            }
+            renderStagedPreviews();
+        }
+
+        // --- TAMBAH / EDIT ALBUM DENGAN FOTO TERPADU ---
+        function openCreateAlbumModal() {
+            document.getElementById('albumId').value = '';
+            document.getElementById('modalAlbumTitle').textContent = 'Buat Album Kegiatan Baru';
+            document.getElementById('btnSaveText').textContent = 'Simpan Album & Unggah Foto';
+            document.getElementById('albumTitleInput').value = '';
+            document.getElementById('albumDateInput').value = new Date().toISOString().split('T')[0];
+            document.getElementById('albumCategoryInput').value = 'mingguan';
+            document.getElementById('albumStatusInput').value = 'published';
+            document.getElementById('albumDescInput').value = '';
+            stagedFiles = [];
+            renderStagedPreviews();
+            document.getElementById('albumModal').classList.add('active');
+        }
+
+        function openEditAlbumModal(albumId) {
+            const album = currentAlbums.find(a => a.id === albumId);
+            if (!album) return;
+
+            document.getElementById('albumId').value = album.id;
+            document.getElementById('modalAlbumTitle').textContent = 'Edit Informasi Album';
+            document.getElementById('btnSaveText').textContent = 'Simpan Perubahan Album';
+            document.getElementById('albumTitleInput').value = album.title;
+            document.getElementById('albumDateInput').value = album.event_date;
+            document.getElementById('albumCategoryInput').value = album.category || 'mingguan';
+            document.getElementById('albumStatusInput').value = album.status;
+            document.getElementById('albumDescInput').value = album.description || '';
+            stagedFiles = [];
+            renderStagedPreviews();
+            document.getElementById('albumModal').classList.add('active');
+        }
+
+        function closeAlbumModal() {
+            document.getElementById('albumModal').classList.remove('active');
+            stagedFiles = [];
+            renderStagedPreviews();
+        }
+
+        async function saveAlbumWithStagedPhotos(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSaveAlbum');
+            const progressBox = document.getElementById('uploadProgressBox');
+            const progressFill = document.getElementById('uploadProgressFill');
+            const statusText = document.getElementById('uploadStatusText');
+
+            const id = document.getElementById('albumId').value;
+            const title = document.getElementById('albumTitleInput').value.trim();
+            const event_date = document.getElementById('albumDateInput').value;
+            const category = document.getElementById('albumCategoryInput').value;
+            const status = document.getElementById('albumStatusInput').value;
+            const description = document.getElementById('albumDescInput').value.trim();
+
+            if (!title) {
+                alert('Judul kegiatan wajib diisi.');
+                return;
+            }
+
+            btn.disabled = true;
+            const client = window.supabaseService.getClient();
+
+            try {
+                let targetAlbumId = id;
+                let albumSlug = '';
+
+                if (!id) {
+                    // 1. BUAT ALBUM BARU
+                    albumSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
+
+                    const { data: newAlbum, error: createErr } = await client
+                        .from('albums')
+                        .insert([{
+                            title,
+                            slug: albumSlug,
+                            event_date,
+                            category,
+                            status,
+                            description,
+                            created_by: (currentUser && currentUser.id) ? currentUser.id : null
+                        }])
+                        .select();
+
+                    if (createErr) throw createErr;
+                    targetAlbumId = newAlbum[0].id;
+                } else {
+                    // 2. UPDATE INFORMASI ALBUM LAMA
+                    const { error: updateErr } = await client
+                        .from('albums')
+                        .update({ title, event_date, category, status, description })
+                        .eq('id', id);
+
+                    if (updateErr) throw updateErr;
+
+                    const existing = currentAlbums.find(a => a.id === id);
+                    albumSlug = existing ? existing.slug : 'album-' + id;
+                }
+
+                // 3. JIKA ADA FOTO YANG DI-STAGE, UNGGAH SEKARANG
+                if (stagedFiles.length > 0) {
+                    progressBox.style.display = 'block';
+                    statusText.style.display = 'block';
+
+                    let coverPhotoUrl = null;
+                    let coverStoragePath = null;
+                    const total = stagedFiles.length;
+
+                    for (let i = 0; i < total; i++) {
+                        const item = stagedFiles[i];
+                        statusText.textContent = `Mengompres & mengunggah foto ${i + 1} dari ${total}...`;
+                        progressFill.style.width = `${Math.round((i / total) * 100)}%`;
+
+                        const uploadRes = await window.supabaseService.uploadPhoto(item.file, albumSlug);
+
+                        if (item.isCover) {
+                            coverPhotoUrl = uploadRes.photo_url;
+                            coverStoragePath = uploadRes.storage_path;
+                        }
+
+                        // Simpan record foto
+                        await client.from('album_photos').insert([{
+                            album_id: targetAlbumId,
+                            photo_url: uploadRes.photo_url,
+                            storage_path: uploadRes.storage_path,
+                            caption: item.name.replace(/\.[^/.]+$/, ""),
+                            sort_order: i,
+                            file_size: uploadRes.file_size
+                        }]);
+                    }
+
+                    // Perbarui sampul album jika ditemukan
+                    if (coverPhotoUrl) {
+                        await window.supabaseService.updateAlbumCover(targetAlbumId, coverPhotoUrl, coverStoragePath);
+                    }
+
+                    progressFill.style.width = '100%';
+                    statusText.textContent = 'Semua foto berhasil diunggah!';
+                }
+
+                showToast(id ? 'Album berhasil diperbarui.' : 'Album baru berhasil dibuat!');
+                closeAlbumModal();
+                await loadAlbums();
+
+            } catch (err) {
+                console.error(err);
+                showToast('Gagal menyimpan album: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                progressBox.style.display = 'none';
+                statusText.style.display = 'none';
+                progressFill.style.width = '0%';
+            }
+        }
+
+        // --- KELOLA FOTO DI DALAM ALBUM (MODAL 2) ---
+        function openManagePhotosModal(albumId) {
+            activeManagingAlbum = currentAlbums.find(a => a.id === albumId);
+            if (!activeManagingAlbum) return;
+
+            document.getElementById('manageModalAlbumTitle').textContent = activeManagingAlbum.title;
+            document.getElementById('manageModalAlbumSub').textContent = `${activeManagingAlbum.event_date} • ${activeManagingAlbum.category.toUpperCase()} • Status: ${activeManagingAlbum.status.toUpperCase()}`;
+            renderManagePhotoGrid();
+            document.getElementById('managePhotosModal').classList.add('active');
+        }
+
+        function closeManagePhotosModal() {
+            document.getElementById('managePhotosModal').classList.remove('active');
+            activeManagingAlbum = null;
+            loadAlbums();
+        }
+
+        function renderManagePhotoGrid() {
+            const grid = document.getElementById('managePhotosGrid');
+            grid.innerHTML = '';
+
+            const photos = activeManagingAlbum.album_photos || [];
+            document.getElementById('managePhotoCount').textContent = photos.length;
+
+            if (photos.length === 0) {
+                grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#888; padding:30px;">Belum ada foto di album ini. Silakan klik kotak di atas untuk menambah foto.</p>';
+                return;
+            }
+
+            photos.forEach(photo => {
+                const isCover = (activeManagingAlbum.cover_url === photo.photo_url);
+                const card = document.createElement('div');
+                card.className = `manage-photo-card ${isCover ? 'is-cover' : ''}`;
+                card.innerHTML = `
+                    <div style="position:relative;">
+                        <img src="${photo.photo_url}" alt="Foto" class="manage-thumb-img">
+                        ${isCover ? '<span style="position:absolute; top:6px; left:6px; background:var(--accent-gold); color:var(--primary-purple); font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:12px;">⭐ Sampul</span>' : ''}
+                    </div>
+                    <div class="manage-card-body">
+                        <input type="text" class="caption-input-small" value="${escapeHtml(photo.caption || '')}" placeholder="Keterangan..." onchange="handleSaveCaption('${photo.id}', this.value)">
+                        <div class="manage-card-btns">
+                            <button type="button" class="btn-mini" onclick="handleSetAsCover('${activeManagingAlbum.id}', '${photo.photo_url}', '${photo.storage_path}')" ${isCover ? 'disabled style="opacity:0.6;"' : ''}>
+                                ${isCover ? 'Sampul Aktif' : 'Jadikan Sampul'}
+                            </button>
+                            <button type="button" class="btn-mini danger" onclick="confirmDeletePhoto('${photo.id}', '${photo.photo_url}', '${photo.storage_path}')" title="Hapus foto">
+                                <i class="fas fa-trash-alt"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function handleSetAsCover(albumId, photoUrl, storagePath) {
+            try {
+                await window.supabaseService.updateAlbumCover(albumId, photoUrl, storagePath);
+                activeManagingAlbum.cover_url = photoUrl;
+                renderManagePhotoGrid();
+                showToast('Foto sampul berhasil diperbarui.');
+            } catch (err) {
+                showToast('Gagal mengubah sampul: ' + err.message, 'error');
+            }
+        }
+
+        async function handleSaveCaption(photoId, caption) {
+            try {
+                await window.supabaseService.updatePhotoCaption(photoId, caption);
+                showToast('Keterangan foto tersimpan.');
+            } catch (err) {
+                showToast('Gagal menyimpan caption: ' + err.message, 'error');
+            }
+        }
+
+        // Upload Tambahan
+        async function handleUploadExtraPhotos(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length || !activeManagingAlbum) return;
+
+            const progressBox = document.getElementById('extraProgressBox');
+            const progressFill = document.getElementById('extraProgressFill');
+            const statusText = document.getElementById('extraStatusText');
+
+            progressBox.style.display = 'block';
+            statusText.style.display = 'block';
+
+            const total = files.length;
+            const client = window.supabaseService.getClient();
+
+            for (let i = 0; i < total; i++) {
+                const file = files[i];
+                statusText.textContent = `Mengunggah foto ${i + 1} dari ${total}...`;
+                progressFill.style.width = `${Math.round((i / total) * 100)}%`;
+
+                try {
+                    const uploadRes = await window.supabaseService.uploadPhoto(file, activeManagingAlbum.slug);
+                    const { data: newPhoto } = await client
+                        .from('album_photos')
+                        .insert([{
+                            album_id: activeManagingAlbum.id,
+                            photo_url: uploadRes.photo_url,
+                            storage_path: uploadRes.storage_path,
+                            caption: file.name.replace(/\.[^/.]+$/, ""),
+                            sort_order: (activeManagingAlbum.album_photos ? activeManagingAlbum.album_photos.length : 0) + i,
+                            file_size: uploadRes.file_size
+                        }])
+                        .select();
+
+                    if (newPhoto && newPhoto[0]) {
+                        if (!activeManagingAlbum.album_photos) activeManagingAlbum.album_photos = [];
+                        activeManagingAlbum.album_photos.push(newPhoto[0]);
+                    }
+                } catch (err) {
+                    console.error('Gagal upload foto ekstra:', file.name, err);
+                }
+            }
+
+            progressFill.style.width = '100%';
+            statusText.textContent = 'Semua foto baru berhasil ditambahkan!';
+            setTimeout(() => {
+                progressBox.style.display = 'none';
+                statusText.style.display = 'none';
+                progressFill.style.width = '0%';
+            }, 2500);
+
+            event.target.value = '';
+            renderManagePhotoGrid();
+            showToast('Foto tambahan berhasil diunggah.');
+        }
+
+        // Modal Konfirmasi Hapus Foto
+        function confirmDeletePhoto(photoId, photoUrl, storagePath) {
+            photoPendingDeletion = { photoId, photoUrl, storagePath };
+            document.getElementById('deleteConfirmImg').src = photoUrl;
+            document.getElementById('btnExecuteDeletePhoto').onclick = executeDeletePhoto;
+            document.getElementById('deletePhotoConfirmModal').classList.add('active');
+        }
+
+        function closeDeleteConfirmModal() {
+            document.getElementById('deletePhotoConfirmModal').classList.remove('active');
+            photoPendingDeletion = null;
+        }
+
+        async function executeDeletePhoto() {
+            if (!photoPendingDeletion) return;
+            const { photoId, storagePath } = photoPendingDeletion;
+
+            try {
+                await window.supabaseService.deleteStorageFile(storagePath);
+                const client = window.supabaseService.getClient();
+                await client.from('album_photos').delete().eq('id', photoId);
+
+                activeManagingAlbum.album_photos = activeManagingAlbum.album_photos.filter(p => p.id !== photoId);
+                closeDeleteConfirmModal();
+                renderManagePhotoGrid();
+                showToast('Foto berhasil dihapus.');
+            } catch (err) {
+                showToast('Gagal menghapus foto: ' + err.message, 'error');
+            }
+        }
+
+        // Hapus Seluruh Album
+        async function deleteAlbum(albumId) {
+            const album = currentAlbums.find(a => a.id === albumId);
+            if (!album) return;
+
+            const photoCount = album.album_photos ? album.album_photos.length : 0;
+            const confirmMsg = `PERINGATAN HAPUS ALBUM:\n\nApakah Anda yakin ingin menghapus album "${album.title}"?\n\nSebanyak ${photoCount} foto di dalamnya akan ikut dihapus secara permanen dari server database dan storage.`;
+            
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                if (album.album_photos && album.album_photos.length > 0) {
+                    for (const photo of album.album_photos) {
+                        if (photo.storage_path) {
+                            await window.supabaseService.deleteStorageFile(photo.storage_path);
+                        }
+                    }
+                }
+                if (album.cover_storage_path) {
+                    await window.supabaseService.deleteStorageFile(album.cover_storage_path);
+                }
+
+                const client = window.supabaseService.getClient();
+                const { error } = await client.from('albums').delete().eq('id', albumId);
+                if (error) throw error;
+
+                showToast('Album dan fotonya berhasil dihapus.');
+                await loadAlbums();
+            } catch (err) {
+                showToast('Gagal menghapus album: ' + err.message, 'error');
+            }
+        }
+
+        // --- PENGELOLAAN HAK AKSES PENGURUS ---
+        async function openAdminManagementModal() {
+            document.getElementById('adminModal').classList.add('active');
+            await loadAdminList();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('active');
+        }
+
+        async function loadAdminList() {
+            const container = document.getElementById('adminListContainer');
+            container.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Memuat daftar pengurus...</p>';
+
+            try {
+                const client = window.supabaseService.getClient();
+                const { data, error } = await client
+                    .from('user_roles')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p>Belum ada pengurus terdaftar.</p>';
+                    return;
+                }
+
+                let html = '<ul style="list-style:none;">';
+                data.forEach(item => {
+                    const isSelf = currentUser && currentUser.id === item.user_id;
+                    const canDelete = currentUserRole === 'owner' && !isSelf;
+
+                    html += `
+                        <li style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
+                            <div>
+                                <strong>${item.email}</strong> ${isSelf ? '<span style="color:var(--accent-pink); font-size:0.8rem;">(Anda)</span>' : ''}
+                                <div style="font-size:0.75rem; color:#888;">Hak Akses: <strong style="text-transform:uppercase;">${item.role}</strong></div>
+                            </div>
+                            <div>
+                                ${canDelete ? `<button class="btn-act danger" style="padding:4px 10px; font-size:0.75rem;" onclick="removeAdminRole('${item.user_id}', '${item.email}')"><i class="fas fa-user-minus"></i> Cabut</button>` : ''}
+                            </div>
+                        </li>
+                    `;
+                });
+                html += '</ul>';
+                container.innerHTML = html;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Gagal memuat: ${err.message}</p>`;
+            }
+        }
+
+        async function handleAddAdminRole(e) {
+            e.preventDefault();
+            const email = document.getElementById('newAdminEmail').value.trim();
+            const role = document.getElementById('newAdminRole').value;
+
+            alert(`Petunjuk: Pastikan email "${email}" sudah didaftarkan di Supabase Auth (Authentication -> Users).\n\nSetelah itu peran ${role.toUpperCase()} akan aktif untuk akun tersebut.`);
+            showToast(`Akses ${role} diproses untuk ${email}`);
+            document.getElementById('newAdminEmail').value = '';
+        }
+
+        async function removeAdminRole(userId, email) {
+            if (currentUserRole !== 'owner') {
+                alert('Hanya Owner yang dapat mencabut hak pengurus.');
+                return;
+            }
+
+            if (!confirm(`Cabut hak pengurus dari ${email}?`)) return;
+
+            try {
+                const client = window.supabaseService.getClient();
+                await client.from('user_roles').delete().eq('user_id', userId);
+                showToast(`Hak akses ${email} telah dicabut.`);
+                await loadAdminList();
+            } catch (err) {
+                showToast('Gagal mencabut hak: ' + err.message, 'error');
+            }
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toast.className = `toast ${type}`;
+            toastMsg.textContent = msg;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3500);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    </script>
+</body>
+</html>

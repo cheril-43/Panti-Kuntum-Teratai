@@ -1,0 +1,16 @@
+# robots.txt - Panti Asuhan Kuntum Teratai Jakarta Selatan
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /galeri.html
+Allow: /pengurus.html
+Allow: /halamanutama.html
+
+# Larang indeks halaman admin dan skrip database internal
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /*.sql$
+
+# Lokasi Peta Situs XML
+Sitemap: https://pantikuntumteratai.or.id/sitemap.xml

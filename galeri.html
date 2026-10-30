@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri & Dokumentasi Kegiatan - Panti Asuhan Kuntum Teratai</title>
+    <meta name="description" content="Dokumentasi foto dan rekaman kegiatan Panti Asuhan Kuntum Teratai: Update mingguan, Ramadan berkah, pendidikan TPA/RA, rekreasi edukatif, dan kunjungan donatur.">
+    
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="Galeri & Dokumentasi Kegiatan - Panti Asuhan Kuntum Teratai">
+    <meta property="og:description" content="Merekam setiap senyuman, kehangatan kebersamaan, dan jejak kebaikan anak-anak asuh di Yayasan Panti Asuhan Kuntum Teratai Jakarta Selatan.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://i.ibb.co.com/6R4Zq0Z/kuntum-teratai-logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS CDN & Helper -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="image-compressor.js"></script>
+    <script src="supabase-config.js"></script>
+    
+    <style>
+        :root {
+            --primary-purple: #3A2C5F; 
+            --primary-light: #F8F5FC;
+            --accent-pink: #C7156E; 
+            --accent-green: #2E7D32; 
+            --accent-gold: #D4AF37;
+            --text-dark: #2D2D2D;
+            --text-light: #6B6B6B;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 12px rgba(58, 44, 95, 0.06);
+            --shadow-md: 0 10px 25px rgba(58, 44, 95, 0.1);
+            --shadow-lg: 0 20px 40px rgba(58, 44, 95, 0.15);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body {
+            font-family: 'Poppins', sans-serif; color: var(--text-dark);
+            background-color: #FBF9FD; line-height: 1.7; overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--primary-purple); line-height: 1.3; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 75px 0 95px; }
+        
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: 50px;
+            font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: var(--transition);
+            border: none; text-align: center;
+        }
+        .btn-primary { background: var(--accent-pink); color: var(--white); box-shadow: 0 4px 15px rgba(199, 21, 110, 0.3); }
+        .btn-primary:hover { background: #a01058; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(199, 21, 110, 0.4); }
+        .btn-outline { background: transparent; color: var(--primary-purple); border: 2px solid var(--primary-purple); }
+        .btn-outline:hover { background: var(--primary-purple); color: var(--white); transform: translateY(-2px); }
+        .btn-sm { padding: 8px 20px; font-size: 0.85rem; border-radius: 30px; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 48px; width: auto; }
+        .logo-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.3rem; color: var(--primary-purple); line-height: 1.2; }
+        .logo-text span { display: block; font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 400; color: var(--accent-pink); letter-spacing: 1px; }
+        
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); position: relative; transition: var(--transition); }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent-pink); transition: var(--transition); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--accent-pink); font-weight: 600; }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--primary-purple); cursor: pointer; background: none; border: none; }
+
+        /* --- PAGE HEADER BANNER --- */
+        .page-header-banner {
+            position: relative;
+            margin-top: 78px;
+            padding: 95px 20px 75px;
+            background: linear-gradient(135deg, rgba(58, 44, 95, 0.94) 0%, rgba(199, 21, 110, 0.88) 100%),
+                        url('1000415603.jpg') center/cover no-repeat;
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+        }
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+        .page-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: var(--accent-gold);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .page-header-banner h1 {
+            font-size: 3.2rem;
+            color: var(--white);
+            margin-bottom: 16px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .page-header-banner p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            opacity: 0.95;
+            line-height: 1.8;
+            max-width: 740px;
+            margin: 0 auto 30px;
+        }
+
+        /* --- SEARCH & FILTER BAR --- */
+        .filter-control-panel {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ECE7F5;
+            margin-bottom: 45px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .search-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+        }
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9D92B6;
+            font-size: 1rem;
+        }
+        .search-input {
+            width: 100%;
+            padding: 13px 20px 13px 48px;
+            border: 1px solid #D6CCE4;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.92rem;
+            background: #FCFAFE;
+            transition: var(--transition);
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(199, 21, 110, 0.12);
+        }
+        .search-count-badge {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Filter Pills */
+        .category-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-pill {
+            background: #F4EFF9;
+            border: 1px solid transparent;
+            color: var(--primary-purple);
+            padding: 7px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-pill:hover {
+            background: #EAE2F5;
+            color: var(--primary-purple);
+        }
+        .filter-pill.active {
+            background: var(--primary-purple);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(58, 44, 95, 0.2);
+        }
+
+        /* --- GRID DAFTAR ALBUM (VIEW 1) --- */
+        .albums-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+        .album-card-item {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ECE7F5;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .album-card-item:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow-lg);
+            border-color: #DCD1ED;
+        }
+        .album-thumb-wrapper {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            width: 100%;
+            background: #EDE6F7;
+            overflow: hidden;
+        }
+        .album-thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .album-card-item:hover .album-thumb-wrapper img {
+            transform: scale(1.07);
+        }
+        .badge-cat-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(58, 44, 95, 0.88);
+            backdrop-filter: blur(4px);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+        .badge-photo-total {
+            position: absolute;
+            bottom: 12px;
+            right: 14px;
+            background: rgba(18, 11, 33, 0.8);
+            backdrop-filter: blur(4px);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 11px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .album-card-body {
+            padding: 22px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .album-card-date {
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .album-card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .album-card-desc {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .album-card-footer {
+            border-top: 1px solid #F3EEF9;
+            padding-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-view-album {
+            color: var(--accent-pink);
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .album-card-item:hover .btn-view-album {
+            transform: translateX(4px);
+            color: #9E1057;
+        }
+
+        /* --- TAMPILAN DETAIL ALBUM (VIEW 2) --- */
+        #albumDetailView {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .detail-top-nav {
+            margin-bottom: 25px;
+        }
+        .detail-hero-box {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 35px 40px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ECE7F5;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .detail-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .detail-hero-box h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-purple);
+        }
+        .detail-hero-box p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 900px;
+        }
+
+        /* Grid Foto di dalam Detail Album */
+        .detail-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
+        }
+        .photo-card-item {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: #EDE6F7;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ECE7F5;
+            transition: var(--transition);
+        }
+        .photo-card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .photo-card-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .photo-card-item:hover img {
+            transform: scale(1.08);
+        }
+        .photo-overlay-info {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(58, 44, 95, 0.85) 0%, rgba(58, 44, 95, 0.2) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .photo-card-item:hover .photo-overlay-info {
+            opacity: 1;
+        }
+        .photo-zoom-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .photo-caption-text {
+            color: var(--white);
+            font-size: 0.88rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* --- KONDISI KHUSUS (EMPTY / LOADING / ERROR) --- */
+        .state-container {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px dashed #D6CCE4;
+            margin: 20px 0;
+        }
+        .state-icon {
+            font-size: 3rem;
+            color: #B5A8CC;
+            margin-bottom: 15px;
+        }
+        .state-container h3 {
+            font-size: 1.3rem;
+            color: var(--primary-purple);
+            margin-bottom: 8px;
+        }
+        .state-container p {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        /* --- ELEGANT EMPTY STATE SHOWCASE --- */
+        .elegant-empty-showcase {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAF7FE 50%, #F5F0FB 100%);
+            border-radius: var(--radius-xl);
+            border: 1px solid #ECE7F5;
+            border-top: 4px solid var(--accent-pink);
+            box-shadow: var(--shadow-sm);
+            padding: 55px 35px;
+            text-align: center;
+            margin: 10px 0 30px;
+        }
+        .empty-showcase-icon {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FDF9FF 0%, #EDE4F8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--accent-pink);
+            font-size: 2.2rem;
+            box-shadow: 0 8px 20px rgba(199, 21, 110, 0.12);
+            border: 2px solid #F1E6F8;
+        }
+        .empty-showcase-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-purple);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+        .empty-showcase-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 720px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+        .empty-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            text-align: left;
+            margin: 35px 0 35px;
+        }
+        .empty-pillar-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 24px 20px;
+            border: 1px solid #EFE8F6;
+            box-shadow: 0 4px 14px rgba(58, 44, 95, 0.04);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .empty-pillar-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: #DBCFEA;
+        }
+        .empty-pillar-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+        }
+        .empty-pillar-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+            margin-bottom: 8px;
+        }
+        .empty-pillar-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .empty-pillar-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 15px;
+            background: #F4EFF9;
+            color: var(--primary-purple);
+            align-self: flex-start;
+        }
+        .empty-showcase-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        /* --- ENHANCED LIGHTBOX MODAL --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 11, 33, 0.94);
+            z-index: 2500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-container {
+            position: relative;
+            max-width: 960px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: var(--radius-md);
+            margin: 0 auto;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255,255,255,0.15);
+        }
+        .lightbox-caption-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(6px);
+            padding: 12px 25px;
+            border-radius: 30px;
+            margin-top: 15px;
+            color: var(--white);
+            text-align: center;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.92rem;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .lightbox-counter-text {
+            background: var(--accent-pink);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+        .lightbox-nav-btn:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .lightbox-nav-btn.prev { left: -65px; }
+        .lightbox-nav-btn.next { right: -65px; }
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: var(--white);
+            font-size: 2.2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: var(--transition);
+        }
+        .lightbox-close:hover {
+            color: var(--accent-pink);
+            transform: scale(1.15);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary-purple);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand img {
+            height: 48px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .footer-links h4 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        .footer-links ul li a {
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .footer-links ul li a:hover {
+            color: var(--accent-pink);
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 992px) {
+            .page-header-banner h1 { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .lightbox-nav-btn.prev { left: 10px; }
+            .lightbox-nav-btn.next { right: 10px; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--white); flex-direction: column; padding: 20px; box-shadow: var(--shadow-md);
+            }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .page-header-banner h1 { font-size: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .albums-gallery-grid { grid-template-columns: 1fr; }
+            .detail-hero-box { padding: 25px 20px; }
+            .detail-hero-box h2 { font-size: 1.7rem; }
+            .detail-photos-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <a href="index.html" style="display:flex; align-items:center; gap:12px;">
+                    <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                    <div class="logo-text">Kuntum Teratai<span>PSAA JAKARTA SELATAN</span></div>
+                </a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang</a></li>
+                <li><a href="index.html#layanan">Layanan</a></li>
+                <li><a href="index.html#program">Program</a></li>
+                <li><a href="index.html#donasi">Donasi</a></li>
+                <li><a href="pengurus.html">Pengurus & Anak Asuh</a></li>
+                <li><a href="galeri.html" class="active">Galeri</a></li>
+                <li><a href="index.html#kontak">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER BANNER -->
+    <header class="page-header-banner" id="top">
+        <div class="page-header-content">
+            <span class="page-badge"><i class="fas fa-camera"></i> Dokumentasi Foto & Kegiatan</span>
+            <h1>Galeri & Album Dokumentasi Kegiatan</h1>
+            <p>Merekam setiap senyuman, kehangatan kebersamaan, proses belajar, dan jejak langkah kebaikan anak-anak asuh di Yayasan Panti Asuhan Kuntum Teratai.</p>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="#kegiatan" class="btn btn-primary"><i class="fas fa-images"></i> Lihat Album Kegiatan</a>
+                <a href="index.html" class="btn btn-outline" style="color:#fff; border-color: rgba(255,255,255,0.4);"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION UTAMA GALERI -->
+    <section id="kegiatan" class="section-padding">
+        <div class="container">
+
+            <!-- ======================================================== -->
+            <!-- VIEW 1: DAFTAR SELURUH ALBUM KEGIATAN -->
+            <!-- ======================================================== -->
+            <div id="albumListView">
+                
+                <!-- Panel Pencarian & Filter Kategori -->
+                <div class="filter-control-panel">
+                    <div class="search-row">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="albumSearchInput" class="search-input" placeholder="Cari kegiatan atau judul album dokumentasi..." oninput="handleSearchFilter()">
+                        </div>
+                        <div class="search-count-badge" id="albumCountLabel">
+                            Menampilkan semua album
+                        </div>
+                    </div>
+                    <div class="category-pills">
+                        <button class="filter-pill active" onclick="setCategoryFilter('all', this)"><i class="fas fa-layer-group"></i> Semua Kegiatan</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('mingguan', this)"><i class="fas fa-star"></i> Update Minggu Ini</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('ramadan', this)"><i class="fas fa-moon"></i> Ramadan Berkah</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('pendidikan', this)"><i class="fas fa-book-reader"></i> Pendidikan & TPA</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('rekreasi', this)"><i class="fas fa-compass"></i> Rekreasi & Outbound</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('donatur', this)"><i class="fas fa-hand-holding-heart"></i> Kunjungan Donatur</button>
+                        <button class="filter-pill" onclick="setCategoryFilter('harian', this)"><i class="fas fa-home"></i> Asrama & Harian</button>
+                    </div>
+                </div>
+
+                <!-- Grid Kartu Album -->
+                <div id="albumsGalleryGrid" class="albums-gallery-grid">
+                    <!-- Diisi secara dinamis melalui JavaScript -->
+                </div>
+
+                <!-- State: Loading / Empty / Error -->
+                <div id="galleryStateBox" class="state-container" style="display:none;">
+                    <div class="state-icon" id="stateIcon"><i class="fas fa-spinner fa-spin"></i></div>
+                    <h3 id="stateTitle">Memuat album dokumentasi...</h3>
+                    <p id="stateDesc">Mohon tunggu sebentar selagi kami menyiapkan galeri kegiatan anak-anak asuh.</p>
+                    <button class="btn btn-outline" id="retryBtn" onclick="loadAlbums()" style="display:none;"><i class="fas fa-redo"></i> Coba Lagi</button>
+                </div>
+
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- VIEW 2: TAMPILAN RINCIAN (DETAIL) SATU ALBUM KEGIATAN -->
+            <!-- ======================================================== -->
+            <div id="albumDetailView">
+                <div class="detail-top-nav">
+                    <button class="btn btn-outline btn-sm" onclick="closeAlbumDetail()">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar Album
+                    </button>
+                </div>
+
+                <div class="detail-hero-box">
+                    <div class="detail-meta-row">
+                        <span class="badge-cat-tag" id="detailCategoryBadge" style="position:static;">Kategori</span>
+                        <span style="font-size:0.85rem; color:var(--accent-pink); font-weight:600;" id="detailDateLabel">
+                            <i class="far fa-calendar-alt"></i> Tanggal
+                        </span>
+                        <span style="font-size:0.85rem; color:var(--text-light);" id="detailLocationLabel">
+                            <i class="fas fa-map-marker-alt"></i> Panti Asuhan Kuntum Teratai
+                        </span>
+                    </div>
+                    <h2 id="detailTitleHeading">Judul Kegiatan</h2>
+                    <p id="detailDescParagraph">Deskripsi lengkap kegiatan...</p>
+                </div>
+
+                <div class="section-header" style="text-align:left; margin-bottom:25px;">
+                    <h3 style="font-size:1.4rem;">Foto Dokumentasi (<span id="detailPhotoCount">0</span>)</h3>
+                    <p style="font-size:0.9rem; color:var(--text-light); margin:0;">Klik foto untuk memperbesar tampilan.</p>
+                </div>
+
+                <!-- Grid Seluruh Foto dalam Album -->
+                <div id="detailPhotosGrid" class="detail-photos-grid">
+                    <!-- Diisi via JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin-top: 45px;">
+                    <button class="btn btn-outline" onclick="closeAlbumDetail()">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar Album
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ENHANCED LIGHTBOX MODAL -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()" title="Tutup (Esc)">&times;</button>
+        <div class="lightbox-container">
+            <button class="lightbox-nav-btn prev" onclick="navigateLightbox(-1)" title="Foto sebelumnya (Panah Kiri)"><i class="fas fa-chevron-left"></i></button>
+            <div class="lightbox-img-wrapper">
+                <img src="" alt="Foto Kegiatan" id="lightboxImg">
+            </div>
+            <button class="lightbox-nav-btn next" onclick="navigateLightbox(1)" title="Foto berikutnya (Panah Kanan)"><i class="fas fa-chevron-right"></i></button>
+            <div class="lightbox-caption-box">
+                <span class="lightbox-counter-text" id="lightboxCounter">Foto 1 dari 6</span>
+                <span id="lightboxCaption">Dokumentasi Kegiatan Panti Asuhan Kuntum Teratai</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                    <p>Yayasan Kuntum Teratai adalah lembaga sosial yang berdedikasi untuk menaungi anak asuh dan lansia di bantaran Sungai Ciliwung, Jakarta Selatan.</p>
+                    <p style="margin-top: 15px; font-style: italic; color: var(--accent-gold);">"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya"</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="index.html#tentang">Tentang Kami</a></li>
+                        <li><a href="index.html#layanan">Layanan</a></li>
+                        <li><a href="index.html#program">Program</a></li>
+                        <li><a href="index.html#donasi">Donasi</a></li>
+                        <li><a href="pengurus.html">Pengurus & Anak Asuh</a></li>
+                        <li><a href="galeri.html">Galeri & Dokumentasi</a></li>
+                        <li><a href="login.html" style="color:var(--accent-pink); font-weight:500;"><i class="fas fa-lock"></i> Portal Pengurus</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legalitas</h4>
+                    <ul>
+                        <li><a href="#">SK Kemenkumham No. AHU-0000784.AH.01.05 Tahun 2024</a></li>
+                        <li><a href="#">Izin Dinas Sosial No. 1/F.3/31.74.01.1005.03.015.R.4/4/-1.848/e/2022</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yayasan Kuntum Teratai. All Rights Reserved. | Dibuat dengan <i class="fas fa-heart" style="color: var(--accent-pink);"></i> untuk sesama.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIKA JAVASCRIPT FRONTEND GALERI -->
+    <script>
+        // Data master album (diisi dari database Supabase oleh pengurus)
+        let allAlbums = [];
+        let activeCategory = 'all';
+        let searchQuery = '';
+        let currentDetailAlbum = null;
+        let lightboxPhotos = [];
+        let currentPhotoIndex = 0;
+
+        // Inisialisasi Data
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGalleryData();
+        });
+
+        async function loadGalleryData() {
+            showState('loading', 'Memuat album dokumentasi...', 'Menyiapkan album kegiatan...');
+
+            allAlbums = [];
+
+            if (window.supabaseService && window.supabaseService.isConfigured()) {
+                try {
+                    const data = await window.supabaseService.getPublishedAlbums();
+                    if (data && data.length > 0) {
+                        allAlbums = data;
+                    }
+                } catch (err) {
+                    console.warn('Gagal memuat album dari database:', err);
+                }
+            }
+
+            hideState();
+            renderAlbumGrid();
+        }
+
+        // Render Daftar Album (View 1)
+        function renderAlbumGrid() {
+            const grid = document.getElementById('albumsGalleryGrid');
+            grid.innerHTML = '';
+            const countLabel = document.getElementById('albumCountLabel');
+
+            // Kondisi 1: Belum ada album sama sekali yang diunggah oleh pengurus
+            // Tampilkan showcase editorial elegan (tidak kosong dan tanpa tombol portal pengurus)
+            if (allAlbums.length === 0) {
+                countLabel.textContent = 'Dokumentasi dalam penyiapan';
+                hideState();
+                grid.innerHTML = getElegantEmptyShowcaseHTML();
+                return;
+            }
+
+            let filtered = allAlbums.filter(album => {
+                const matchesCategory = (activeCategory === 'all' || album.category === activeCategory);
+                const query = searchQuery.toLowerCase().trim();
+                const matchesSearch = !query || 
+                    (album.title && album.title.toLowerCase().includes(query)) ||
+                    (album.description && album.description.toLowerCase().includes(query));
+                return matchesCategory && matchesSearch;
+            });
+
+            // Update Label Jumlah
+            countLabel.textContent = `Menampilkan ${filtered.length} album kegiatan`;
+
+            // Kondisi 2: Ada album di database, namun tidak cocok dengan pencarian / filter kategori
+            if (filtered.length === 0) {
+                showState('empty_filter', 'Tidak Ada Album yang Sesuai', 'Coba ubah kata kunci pencarian atau pilih kategori kegiatan lain.');
+                return;
+            }
+
+            hideState();
+
+            filtered.forEach(album => {
+                const photos = album.album_photos || [];
+                const photosCount = photos.length;
+                const coverImg = album.cover_url || (photos[0] ? photos[0].photo_url : 'Screenshot 2026-10-25 185825.png');
+                const categoryLabel = getCategoryLabel(album.category);
+
+                const card = document.createElement('div');
+                card.className = 'album-card-item';
+                card.onclick = () => openAlbumDetail(album);
+
+                card.innerHTML = `
+                    <div class="album-thumb-wrapper">
+                        <span class="badge-cat-tag">${categoryLabel}</span>
+                        <img src="${coverImg}" alt="${escapeHtml(album.title)}" loading="lazy" onerror="this.src='Screenshot 2026-10-25 185825.png'">
+                        <span class="badge-photo-total"><i class="fas fa-camera"></i> ${photosCount} Foto</span>
+                    </div>
+                    <div class="album-card-body">
+                        <div>
+                            <div class="album-card-date"><i class="far fa-calendar-alt"></i> ${formatDateIndo(album.event_date)}</div>
+                            <h3 class="album-card-title">${escapeHtml(album.title)}</h3>
+                            <p class="album-card-desc">${escapeHtml(album.description || 'Dokumentasi kegiatan anak asuh.')}</p>
+                        </div>
+                        <div class="album-card-footer">
+                            <span class="btn-view-album">Buka Album Foto <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Tampilan Elegan saat Dokumentasi Belum Ditambahkan
+        function getElegantEmptyShowcaseHTML() {
+            return `
+                <div class="elegant-empty-showcase" style="grid-column: 1 / -1;">
+                    <div class="empty-showcase-icon">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <span class="badge" style="background:#E8F5E9; color:var(--accent-green); padding:6px 18px; border-radius:30px; font-size:0.82rem; font-weight:600; display:inline-block; margin-bottom:15px;">
+                        <i class="fas fa-heart" style="color:var(--accent-pink);"></i> Merekam Jejak Kebaikan & Tawa Ceria
+                    </span>
+                    <h3 class="empty-showcase-title">Ruang Dokumentasi Kegiatan Anak Asuh</h3>
+                    <p class="empty-showcase-desc">
+                        Setiap senyuman, proses belajar, tawa ceria, dan doa bersama anak-anak asuh Yayasan Panti Asuhan Kuntum Teratai senantiasa kami rekam dengan penuh rasa syukur. Album foto kegiatan terbaru sedang dalam proses penyiapan dan kurasi berkala oleh pengurus yayasan.
+                    </p>
+
+                    <div class="empty-pillars-grid">
+                        <div class="empty-pillar-card">
+                            <div class="empty-pillar-icon" style="color: #D4AF37; background: #FFF9E6;">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <div class="empty-pillar-title">Ramadan & Hari Besar Islam</div>
+                            <div class="empty-pillar-desc">
+                                Doa bersama, buka puasa akbar bersama para sahabat donatur, kajian rohani, serta penyaluran zakat dan parsel Idul Fitri.
+                            </div>
+                            <span class="empty-pillar-badge"><i class="far fa-calendar-check"></i> Agenda Rutin Panti</span>
+                        </div>
+
+                        <div class="empty-pillar-card">
+                            <div class="empty-pillar-icon" style="color: #2E7D32; background: #E8F5E9;">
+                                <i class="fas fa-book-reader"></i>
+                            </div>
+                            <div class="empty-pillar-title">Pendidikan, TPA & Tahsin</div>
+                            <div class="empty-pillar-desc">
+                                Bimbingan belajar formal sekolah, kelas mengaji Al-Quran & tahsin juz amma, serta aktivitas ceria adik-adik RA/PAUD.
+                            </div>
+                            <span class="empty-pillar-badge"><i class="fas fa-graduation-cap"></i> Setiap Sore Hari</span>
+                        </div>
+
+                        <div class="empty-pillar-card">
+                            <div class="empty-pillar-icon" style="color: #C7156E; background: #FDE8F1;">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="empty-pillar-title">Rekreasi & Kreativitas Anak</div>
+                            <div class="empty-pillar-desc">
+                                Karya melukis kanvas cita-cita, pentas seni santri, outbound melatih kekompakan, dan tamasya edukatif mengenal alam.
+                            </div>
+                            <span class="empty-pillar-badge"><i class="fas fa-star"></i> Bakat & Kreativitas</span>
+                        </div>
+
+                        <div class="empty-pillar-card">
+                            <div class="empty-pillar-icon" style="color: #3A2C5F; background: #EDE6F7;">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <div class="empty-pillar-title">Kunjungan Sahabat Donatur</div>
+                            <div class="empty-pillar-desc">
+                                Silaturahmi komunitas relawan, santap sehat bersama anak asuh, cek kesehatan berkala, dan penyerahan bantuan pendidikan.
+                            </div>
+                            <span class="empty-pillar-badge"><i class="fas fa-hands-helping"></i> Kunjungan Hangat</span>
+                        </div>
+                    </div>
+
+                    <div class="empty-showcase-actions">
+                        <a href="index.html#donasi" class="btn btn-primary" style="padding: 12px 28px;">
+                            <i class="fas fa-heart"></i> Salurkan Donasi untuk Kegiatan
+                        </a>
+                        <a href="pengurus.html" class="btn btn-outline" style="padding: 12px 28px;">
+                            <i class="fas fa-users"></i> Kenali Pengurus & Anak Asuh
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Buka Detail Album (View 2)
+        function openAlbumDetail(album) {
+            currentDetailAlbum = album;
+            const listView = document.getElementById('albumListView');
+            const detailView = document.getElementById('albumDetailView');
+
+            // Set info detail
+            document.getElementById('detailCategoryBadge').textContent = getCategoryLabel(album.category);
+            document.getElementById('detailDateLabel').innerHTML = `<i class="far fa-calendar-alt"></i> ${formatDateIndo(album.event_date)}`;
+            document.getElementById('detailTitleHeading').textContent = album.title;
+            document.getElementById('detailDescParagraph').textContent = album.description || 'Tidak ada deskripsi rinci untuk kegiatan ini.';
+
+            const photos = album.album_photos || [];
+            document.getElementById('detailPhotoCount').textContent = photos.length;
+            lightboxPhotos = photos;
+
+            // Render Foto-foto
+            const photoGrid = document.getElementById('detailPhotosGrid');
+            photoGrid.innerHTML = '';
+
+            if (photos.length === 0) {
+                photoGrid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px; color:#888;">
+                        <i class="fas fa-images" style="font-size:2rem; margin-bottom:10px;"></i>
+                        <p>Belum ada foto yang diunggah ke album ini.</p>
+                    </div>
+                `;
+            } else {
+                photos.forEach((photo, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'photo-card-item';
+                    card.onclick = () => openLightboxDetail(idx);
+
+                    card.innerHTML = `
+                        <img src="${photo.photo_url}" alt="${escapeHtml(photo.caption || album.title)}" loading="lazy" onerror="this.src='Screenshot 2026-10-25 185825.png'">
+                        <div class="photo-overlay-info">
+                            <div class="photo-zoom-icon"><i class="fas fa-search-plus"></i></div>
+                            <div class="photo-caption-text">${escapeHtml(photo.caption || album.title)}</div>
+                        </div>
+                    `;
+                    photoGrid.appendChild(card);
+                });
+            }
+
+            listView.style.display = 'none';
+            detailView.style.display = 'block';
+            window.scrollTo({ top: document.getElementById('kegiatan').offsetTop - 90, behavior: 'smooth' });
+        }
+
+        // Tutup Detail Album & Kembali ke Daftar
+        function closeAlbumDetail() {
+            document.getElementById('albumDetailView').style.display = 'none';
+            document.getElementById('albumListView').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('kegiatan').offsetTop - 90, behavior: 'smooth' });
+        }
+
+        // Filter & Search Handlers
+        function handleSearchFilter() {
+            searchQuery = document.getElementById('albumSearchInput').value;
+            renderAlbumGrid();
+        }
+
+        function setCategoryFilter(category, button) {
+            activeCategory = category;
+            document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            renderAlbumGrid();
+        }
+
+        // State Box Helper
+        function showState(type, title, desc) {
+            const box = document.getElementById('galleryStateBox');
+            const icon = document.getElementById('stateIcon');
+            const btn = document.getElementById('stateBtn');
+            document.getElementById('stateTitle').textContent = title;
+            document.getElementById('stateDesc').textContent = desc;
+
+            if (type === 'loading') {
+                icon.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:var(--accent-pink);"></i>';
+                btn.style.display = 'none';
+            } else if (type === 'empty_filter' || type === 'empty') {
+                icon.innerHTML = '<i class="fas fa-search" style="color:var(--primary-purple); font-size:3rem;"></i>';
+                btn.style.display = 'inline-flex';
+                btn.innerHTML = '<i class="fas fa-layer-group"></i> Tampilkan Semua Album';
+                btn.onclick = () => {
+                    document.getElementById('albumSearchInput').value = '';
+                    searchQuery = '';
+                    activeCategory = 'all';
+                    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.filter-pill').classList.add('active');
+                    renderAlbumGrid();
+                };
+            } else {
+                icon.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:var(--accent-pink); font-size:3rem;"></i>';
+                btn.style.display = 'inline-flex';
+                btn.innerHTML = '<i class="fas fa-redo"></i> Coba Muat Ulang';
+                btn.onclick = loadGalleryData;
+            }
+
+            box.style.display = 'block';
+        }
+
+        function hideState() {
+            document.getElementById('galleryStateBox').style.display = 'none';
+        }
+
+        // --- ENHANCED LIGHTBOX POPUP ---
+        function openLightboxDetail(index) {
+            if (!lightboxPhotos || lightboxPhotos.length === 0) return;
+            currentPhotoIndex = index;
+            updateLightbox();
+
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateLightbox() {
+            const photo = lightboxPhotos[currentPhotoIndex];
+            if (!photo) return;
+
+            document.getElementById('lightboxImg').src = photo.photo_url;
+            document.getElementById('lightboxCaption').textContent = photo.caption || (currentDetailAlbum ? currentDetailAlbum.title : 'Dokumentasi Panti Asuhan Kuntum Teratai');
+            document.getElementById('lightboxCounter').textContent = `Foto ${currentPhotoIndex + 1} dari ${lightboxPhotos.length}`;
+        }
+
+        function navigateLightbox(direction) {
+            if (!lightboxPhotos || lightboxPhotos.length === 0) return;
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex < 0) currentPhotoIndex = lightboxPhotos.length - 1;
+            if (currentPhotoIndex >= lightboxPhotos.length) currentPhotoIndex = 0;
+            updateLightbox();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this || e.target.classList.contains('lightbox-container')) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox && lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        // Format Tanggal Indonesia
+        function formatDateIndo(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateStr).toLocaleDateString('id-ID', options);
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function getCategoryLabel(cat) {
+            const map = {
+                'mingguan': 'Update Minggu Ini',
+                'ramadan': 'Ramadan Berkah',
+                'pendidikan': 'Pendidikan & TPA',
+                'rekreasi': 'Rekreasi Edukatif',
+                'donatur': 'Kunjungan Donatur',
+                'harian': 'Keseharian Asrama',
+                'kegiatan': 'Kegiatan Panti'
+            };
+            return map[cat] || cat.toUpperCase();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

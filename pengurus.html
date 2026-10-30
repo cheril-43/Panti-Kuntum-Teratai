@@ -1,0 +1,2695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Pengurus & Anak Asuh - Panti Asuhan Kuntum Teratai</title>
+    <meta name="description" content="Struktur Organisasi, Pengurus, dan Profil Anak Asuh Yayasan Panti Asuhan Kuntum Teratai, Tebet, Jakarta Selatan.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS CDN & Helper -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="image-compressor.js"></script>
+    <script src="supabase-config.js"></script>
+    
+    <style>
+        :root {
+            --primary-purple: #3A2C5F; 
+            --primary-light: #F8F5FC;
+            --accent-pink: #C7156E; 
+            --accent-green: #2E7D32; 
+            --accent-gold: #D4AF37;
+            --text-dark: #2D2D2D;
+            --text-light: #6B6B6B;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px rgba(58, 44, 95, 0.1);
+            --shadow-lg: 0 20px 40px rgba(58, 44, 95, 0.15);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body {
+            font-family: 'Poppins', sans-serif; color: var(--text-dark);
+            background-color: var(--white); line-height: 1.7; overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; color: var(--primary-purple); line-height: 1.3; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 90px 0; }
+        
+        .section-header { text-align: center; margin-bottom: 55px; }
+        .section-header h2 { font-size: 2.6rem; margin-bottom: 15px; position: relative; display: inline-block; }
+        .section-header h2::after {
+            content: ''; position: absolute; width: 60px; height: 3px;
+            background: var(--accent-pink); bottom: -10px; left: 50%;
+            transform: translateX(-50%); border-radius: 2px;
+        }
+        .section-header p { color: var(--text-light); max-width: 650px; margin: 0 auto; font-size: 1.05rem; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: 50px;
+            font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: var(--transition);
+            border: none; text-align: center;
+        }
+        .btn-primary { background: var(--accent-pink); color: var(--white); box-shadow: 0 4px 15px rgba(199, 21, 110, 0.3); }
+        .btn-primary:hover { background: #a01058; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(199, 21, 110, 0.4); }
+        .btn-outline { background: transparent; color: var(--primary-purple); border: 2px solid var(--primary-purple); }
+        .btn-outline:hover { background: var(--primary-purple); color: var(--white); }
+        .btn-sm { padding: 8px 18px; font-size: 0.85rem; border-radius: 30px; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 48px; width: auto; }
+        .logo-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.3rem; color: var(--primary-purple); line-height: 1.2; }
+        .logo-text span { display: block; font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 400; color: var(--accent-pink); letter-spacing: 1px; }
+        
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-dark); position: relative; transition: var(--transition); }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent-pink); transition: var(--transition); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--accent-pink); font-weight: 600; }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--primary-purple); cursor: pointer; background: none; border: none; }
+
+        /* --- PAGE HEADER TERSENDIRI --- */
+        .page-header-banner {
+            position: relative;
+            margin-top: 78px;
+            padding: 100px 20px 80px;
+            background: linear-gradient(135deg, rgba(58, 44, 95, 0.94) 0%, rgba(199, 21, 110, 0.85) 100%),
+                        url('1000415418.jpg') center/cover no-repeat;
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+        }
+        .page-header-banner::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .page-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .page-header-banner h1 {
+            font-size: 3.2rem;
+            color: var(--white);
+            margin-bottom: 18px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .page-header-banner p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            opacity: 0.95;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .quick-nav a {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            padding: 10px 22px;
+            border-radius: 50px;
+            color: var(--white);
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: var(--transition);
+        }
+        .quick-nav a:hover {
+            background: var(--white);
+            color: var(--primary-purple);
+            transform: translateY(-2px);
+        }
+
+        /* --- KANVAS STRUKTUR BESAR / DIAGRAM --- */
+        .chart-canvas-box {
+            background: var(--primary-light);
+            border: 2px dashed #C0B7D6;
+            border-radius: var(--radius-lg);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 60px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .chart-canvas-box:hover {
+            border-color: var(--accent-pink);
+            background: #F4EEFB;
+        }
+        .chart-canvas-icon {
+            font-size: 3rem;
+            color: var(--primary-purple);
+            opacity: 0.6;
+            margin-bottom: 15px;
+        }
+
+        /* --- KARTU PENGURUS INTI DENGAN KANVAS FOTO --- */
+        .team-grid-inti {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        .team-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px 20px 25px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--accent-pink);
+            transition: var(--transition);
+            position: relative;
+        }
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Bingkai Kanvas Foto */
+        .photo-canvas-slot {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            position: relative;
+            background: #F0EDF5;
+            border: 3px dashed #B8AED0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .photo-canvas-slot:hover {
+            border-color: var(--accent-pink);
+            background: #EBE4F5;
+        }
+        .photo-canvas-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .photo-canvas-slot .canvas-placeholder-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--primary-purple);
+            padding: 10px;
+            text-align: center;
+        }
+        .photo-canvas-slot .canvas-placeholder-content i {
+            font-size: 1.8rem;
+            color: var(--accent-pink);
+            margin-bottom: 5px;
+        }
+        .photo-canvas-slot .canvas-placeholder-content span {
+            font-size: 0.72rem;
+            line-height: 1.2;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .team-card h4 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        .team-card .role {
+            display: inline-block;
+            background: #E8F5E9;
+            color: var(--accent-green);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .team-card .detail-desc {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* --- SEKSI KEPENGURUSAN --- */
+        .seksi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+            margin-bottom: 80px;
+        }
+        .seksi-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--primary-purple);
+            transition: var(--transition);
+        }
+        .seksi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-left-color: var(--accent-pink);
+        }
+        .seksi-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .seksi-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-purple);
+            font-size: 1.2rem;
+        }
+        .seksi-header h5 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+        .seksi-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .member-badge {
+            background: var(--primary-light);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border: 1px solid #ECE4F7;
+        }
+
+        /* --- BAGIAN KANVAS FOTO ANAK ASUH --- */
+        .children-showcase {
+            background: var(--primary-light);
+            padding: 80px 0;
+            border-radius: var(--radius-xl);
+            margin-bottom: 70px;
+        }
+        .canvas-grid-children {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .canvas-child-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ECE7F5;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .canvas-child-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: #D6CCE4;
+        }
+        .child-canvas-frame {
+            height: 230px;
+            width: 100%;
+            background: #F3EEF9;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #EDE6F7;
+        }
+        .child-canvas-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+            z-index: 2;
+        }
+        .child-canvas-frame img:not([src]),
+        .child-canvas-frame img[src=""],
+        .child-canvas-frame img.img-hidden {
+            display: none !important;
+        }
+        .canvas-child-card:hover .child-canvas-frame img {
+            transform: scale(1.06);
+        }
+        .canvas-inner-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            background: #F5F0FB;
+            color: #9A8BB4;
+            z-index: 1;
+        }
+        .canvas-inner-placeholder i {
+            font-size: 3.2rem;
+            margin-bottom: 8px;
+            color: #B2A2CE;
+        }
+        .canvas-inner-placeholder span {
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
+        
+        .child-number-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(58, 44, 95, 0.88);
+            backdrop-filter: blur(4px);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 15px;
+            z-index: 5;
+        }
+        .child-gender-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 15px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .child-gender-badge.lk {
+            background: #E3F2FD;
+            color: #1565C0;
+            border: 1px solid #BBDEFB;
+        }
+        .child-gender-badge.pr {
+            background: #FCE4EC;
+            color: #C2185B;
+            border: 1px solid #F8BBD0;
+        }
+
+        /* Tombol Ganti Foto (Hanya Tampil Jika Login Sebagai Admin/Owner) */
+        .btn-change-photo-admin {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: var(--accent-pink);
+            color: var(--white);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(199, 21, 110, 0.35);
+            z-index: 5;
+            display: none; /* Default disembunyikan untuk publik */
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-change-photo-admin:hover {
+            background: #A01058;
+            transform: scale(1.05);
+        }
+
+        .child-card-body {
+            padding: 20px 22px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .child-name-heading {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            margin-bottom: 14px;
+            line-height: 1.35;
+            text-transform: uppercase;
+            min-height: 2.7rem;
+        }
+        .child-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: var(--text-dark);
+            border-top: 1px solid #F3EEF9;
+            padding-top: 12px;
+        }
+        .child-info-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .child-info-row .label {
+            color: var(--text-light);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .child-info-row .val {
+            font-weight: 600;
+            color: var(--primary-purple);
+            text-align: right;
+        }
+
+        /* Banner Status Admin Mode */
+        .admin-mode-banner {
+            background: linear-gradient(135deg, #FFF0F6 0%, #EDE6F7 100%);
+            border: 1px solid #F5C6D8;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 25px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* --- STATISTIK BINAAN --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .stat-card {
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 3px solid var(--accent-pink);
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .stat-card h3 {
+            font-size: 2.8rem;
+            color: var(--accent-pink);
+            margin-bottom: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        .stat-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary-purple);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 0 20px;
+            margin-top: 80px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand img {
+            height: 48px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .footer-links h4 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        .footer-links ul li a {
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .footer-links ul li a:hover {
+            color: var(--accent-pink);
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .page-header-banner h1 { font-size: 2.6rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--white); flex-direction: column; padding: 20px; box-shadow: var(--shadow-md);
+            }
+            .nav-links.active { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .page-header-banner h1 { font-size: 2.2rem; }
+            .page-header-banner p { font-size: 1rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .canvas-helper-alert { flex-direction: column; text-align: center; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <a href="index.html" style="display:flex; align-items:center; gap:12px;">
+                    <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                    <div class="logo-text">Kuntum Teratai<span>PSAA JAKARTA SELATAN</span></div>
+                </a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang</a></li>
+                <li><a href="index.html#layanan">Layanan</a></li>
+                <li><a href="index.html#program">Program</a></li>
+                <li><a href="index.html#donasi">Donasi</a></li>
+                <!-- Tautan aktif ke halaman ini -->
+                <li><a href="pengurus.html" class="active">Pengurus & Anak Asuh</a></li>
+                <li><a href="galeri.html">Galeri</a></li>
+                <li><a href="index.html#kontak">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER TERSENDIRI UNTUK STRUKTUR PENGURUS & ANAK ASUH -->
+    <header class="page-header-banner" id="top">
+        <div class="page-header-content">
+            <span class="page-badge"><i class="fas fa-sitemap"></i> Halaman Khusus</span>
+            <h1>Struktur Pengurus & Anak Asuh</h1>
+            <p>Mengenal jajaran pembina, pengurus harian, pengasuh, serta tunas-tunas harapan bangsa yang dibina di Yayasan Panti Asuhan Kuntum Teratai.</p>
+            <div class="quick-nav">
+                <a href="#pengurus-inti"><i class="fas fa-user-tie"></i> Pengurus Inti</a>
+                <a href="#seksi"><i class="fas fa-users-cog"></i> Seksi-Seksi</a>
+                <a href="#kanvas-anak"><i class="fas fa-child"></i> Kanvas Foto Anak Asuh</a>
+                <a href="#statistik"><i class="fas fa-chart-pie"></i> Data Binaan</a>
+                <a href="index.html" style="background: rgba(255,255,255,0.25);"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- BAGIAN 1: STRUKTUR PENGURUS INTI -->
+    <section id="pengurus-inti" class="section-padding">
+        <div class="container">
+            
+            <div class="section-header reveal">
+                <h2>Struktur Pengurus Inti</h2>
+                <p>Jajaran pengurus yang bertanggung jawab atas arah kebijakan, operasional, dan kesejahteraan yayasan.</p>
+            </div>
+
+            <!-- KANVAS OPSIONAL: BAGAN POHON STRUKTUR ORGANISASI -->
+            <div class="chart-canvas-box reveal">
+                <div class="chart-canvas-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3 style="font-size: 1.4rem; margin-bottom: 8px;">Bagan Struktur Organisasi</h3>
+                <p style="color: var(--text-light); font-size: 0.92rem; max-width: 600px; margin: 0 auto 15px;">
+                    Bagan hirarki struktur kepengurusan Yayasan Panti Asuhan Kuntum Teratai.
+                </p>
+                <div id="baganPreviewContainer" style="display:none; margin-top:20px;">
+                    <!-- GANTI FOTO BAGAN: Masukkan tag <img src="nama_file_bagan.jpg" alt="Bagan Struktur Organisasi"> di sini jika ada -->
+                    <img id="baganPreviewImg" src="" alt="Bagan Struktur Organisasi" style="max-height: 400px; margin: 0 auto; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                </div>
+            </div>
+
+            <!-- GRID PENGURUS INTI -->
+            <div class="team-grid-inti reveal">
+                
+                <!-- 1. Pembina -->
+                <div class="team-card">
+                    <div class="photo-canvas-slot">
+                        <!-- GANTI FOTO: Ganti src dengan link/file foto Nina Agustina -->
+                        <img id="imgPengurus1" src="1000414368.jpg" alt="Nina Agustina">
+                    </div>
+                    <h4>Nina Agustina, S.Pd.I.</h4>
+                    <span class="role">Pembina</span>
+                    <p class="detail-desc">Perintis dan Penggagas Panti Asuhan Kuntum Teratai sejak 2004.</p>
+                </div>
+
+                <!-- 2. Ketua -->
+                <div class="team-card">
+                    <div class="photo-canvas-slot">
+                        <!-- GANTI FOTO: Ganti src dengan link/file foto Wina M. Siregar -->
+                        <img id="imgPengurus2" src="IMG-20261028-WA0108.jpg" alt="Wina M. Siregar">
+                    </div>
+                    <h4>Wina M. Siregar, SST.Pa.</h4>
+                    <span class="role">Ketua Yayasan</span>
+                    <p class="detail-desc">Memimpin jalannya program, kepengurusan, dan koordinasi yayasan.</p>
+                </div>
+
+                <!-- 3. Sekretaris -->
+                <div class="team-card">
+                    <div class="photo-canvas-slot">
+                        <!-- GANTI FOTO: Ganti src dengan link/file foto Arif M. Siregar -->
+                        <img id="imgPengurus3" src="1000414362.jpg" alt="Arif M. Siregar">
+                    </div>
+                    <h4>Arif M. Siregar, S.E.</h4>
+                    <span class="role">Sekretaris</span>
+                    <p class="detail-desc">Pengelolaan tata kelola administrasi, surat menyurat, dan legalitas.</p>
+                </div>
+
+                <!-- 4. Bendahara -->
+                <div class="team-card">
+                    <div class="photo-canvas-slot">
+                        <!-- GANTI FOTO: Ganti src dengan link/file foto Adhani Siregar -->
+                        <img id="imgPengurus4" src="1000414360.jpg" alt="Adhani Siregar">
+                    </div>
+                    <h4>Adhani Siregar, S.S.T.</h4>
+                    <span class="role">Bendahara</span>
+                    <p class="detail-desc">Pengelolaan akuntabilitas keuangan dan pencatatan dana donatur.</p>
+                </div>
+
+                <!-- 5. Pengawas -->
+                <div class="team-card">
+                    <div class="photo-canvas-slot">
+                        <!-- GANTI FOTO: Ganti src dengan link/file foto H. Nizar -->
+                        <img id="imgPengurus5" src="1000414364.jpg" alt="H. Nizar">
+                    </div>
+                    <h4>H. Nizar, S.Kom.</h4>
+                    <span class="role">Pengawas</span>
+                    <p class="detail-desc">Pengawasan berkala terhadap kepatuhan anggaran dan pelaksanaan program.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BAGIAN 2: SEKSI-SEKSI -->
+    <section id="seksi" class="section-padding" style="background: var(--primary-light);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Seksi-Seksi Operasional</h2>
+                <p>Tim lapangan yang senantiasa mendampingi kebutuhan gizi, pendidikan, dan keseharian anak asuh.</p>
+            </div>
+
+            <div class="seksi-grid reveal">
+                
+                <!-- Seksi Pengasuh -->
+                <div class="seksi-card">
+                    <div class="seksi-header">
+                        <div class="seksi-icon"><i class="fas fa-hands-helping"></i></div>
+                        <div>
+                            <h5>Seksi Pengasuh</h5>
+                            <span style="font-size: 0.8rem; color: var(--accent-pink);">4 Anggota</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-light); margin-bottom: 12px;">
+                        Bertanggung jawab atas pengasuhan, pembinaan moral, serta kesehatan anak di asrama.
+                    </p>
+                    <div class="seksi-members">
+                        <span class="member-badge"><i class="fas fa-user"></i> Casti</span>
+                        <span class="member-badge"><i class="fas fa-user"></i> Noni</span>
+                        <span class="member-badge"><i class="fas fa-user"></i> Rasinem</span>
+                        <span class="member-badge"><i class="fas fa-user"></i> Ita Yuliana</span>
+                    </div>
+                </div>
+
+                <!-- Seksi Pendidikan -->
+                <div class="seksi-card">
+                    <div class="seksi-header">
+                        <div class="seksi-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <h5>Seksi Pendidikan</h5>
+                            <span style="font-size: 0.8rem; color: var(--accent-pink);">4 Anggota</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-light); margin-bottom: 12px;">
+                        Membimbing proses belajar formal, kurikulum PAUD/RA, dan pendidikan keagamaan TPA.
+                    </p>
+                    <div class="seksi-members">
+                        <span class="member-badge"><i class="fas fa-user-graduate"></i> Saparida, S.Pd.I.</span>
+                        <span class="member-badge"><i class="fas fa-user-graduate"></i> Mardiana</span>
+                        <span class="member-badge"><i class="fas fa-user-graduate"></i> Aliyah</span>
+                    </div>
+                </div>
+
+                <!-- Seksi Administrasi -->
+                <div class="seksi-card">
+                    <div class="seksi-header">
+                        <div class="seksi-icon"><i class="fas fa-folder-open"></i></div>
+                        <div>
+                            <h5>Seksi Administrasi</h5>
+                            <span style="font-size: 0.8rem; color: var(--accent-pink);">1 Anggota</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-light); margin-bottom: 12px;">
+                        Pencatatan data anak asuh, berkas sekolah, serta inventaris sarana dan prasarana.
+                    </p>
+                    <div class="seksi-members">
+                        <span class="member-badge"><i class="fas fa-id-card"></i> Fahrul</span>
+                    </div>
+                </div>
+
+                <!-- Seksi Humas -->
+                <div class="seksi-card">
+                    <div class="seksi-header">
+                        <div class="seksi-icon"><i class="fas fa-bullhorn"></i></div>
+                        <div>
+                            <h5>Seksi Humas</h5>
+                            <span style="font-size: 0.8rem; color: var(--accent-pink);">1 Anggota</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-light); margin-bottom: 12px;">
+                        Menghubungkan yayasan dengan para donatur, relawan, masyarakat sekitar, dan mitra.
+                    </p>
+                    <div class="seksi-members">
+                        <span class="member-badge"><i class="fas fa-comments"></i> Ramadhian Razaq</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BAGIAN 3: KANVAS KOSONG UNTUK FOTO ANAK ASUH -->
+    <section id="kanvas-anak" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Kanvas Foto Anak Asuh</h2>
+                <p>Ruang khusus untuk menampilkan foto dan profil anak-anak binaan Panti Asuhan Kuntum Teratai. Anda dapat menambahkan foto langsung ke slot di bawah ini.</p>
+            </div>
+
+            <!-- FILTER GENDER & PENCARIAN ANAK ASUH -->
+            <div style="background:var(--white); border-radius:16px; padding:18px 24px; box-shadow:var(--shadow-sm); border:1px solid #ECE7F5; margin-bottom:30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;" class="reveal">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button type="button" class="btn-filter-child active" onclick="filterChildren('all', this)" style="background:var(--primary-purple); color:#fff; border:none; padding:7px 18px; border-radius:20px; font-size:0.85rem; font-weight:500; cursor:pointer;">Semua Anak Asuh (36)</button>
+                    <button type="button" class="btn-filter-child" onclick="filterChildren('lk', this)" style="background:#F4EFF9; color:var(--primary-purple); border:none; padding:7px 18px; border-radius:20px; font-size:0.85rem; font-weight:500; cursor:pointer;"><i class="fas fa-mars" style="color:#1565C0;"></i> Putra / Laki-laki (18)</button>
+                    <button type="button" class="btn-filter-child" onclick="filterChildren('pr', this)" style="background:#F4EFF9; color:var(--primary-purple); border:none; padding:7px 18px; border-radius:20px; font-size:0.85rem; font-weight:500; cursor:pointer;"><i class="fas fa-venus" style="color:#C2185B;"></i> Putri / Perempuan (18)</button>
+                </div>
+                <div style="position:relative; min-width:240px;">
+                    <i class="fas fa-search" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#9D92B6; font-size:0.85rem;"></i>
+                    <input type="text" id="childSearchInput" oninput="searchChildren()" placeholder="Cari nama anak asuh..." style="width:100%; padding:8px 14px 8px 36px; border:1px solid #D6CCE4; border-radius:20px; font-size:0.85rem; outline:none;">
+                </div>
+            </div>
+
+            <!-- BANNER MODE PENGURUS (HANYA MUNCUL JIKA ADMIN / OWNER LOGIN) -->
+            <div id="adminModeBanner" class="admin-mode-banner">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-user-shield" style="font-size:1.3rem; color:var(--accent-pink);"></i>
+                    <div>
+                        <strong style="color:var(--primary-purple); font-size:0.9rem;">Mode Pengurus Terverifikasi:</strong>
+                        <span style="font-size:0.82rem; color:var(--text-light);"> Anda memiliki hak untuk mengganti foto profil anak asuh secara langsung.</span>
+                    </div>
+                </div>
+                <span class="role-pill" id="adminRoleText" style="background:var(--accent-pink); color:#fff; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:700;">ADMIN</span>
+            </div>
+
+            <!-- ========================================================================================= -->
+            <!-- DAFTAR PENGATURAN FOTO 36 ANAK ASUH (CUKUP GANTI / PASTE PATH DI BAWAH INI)               -->
+            <!-- Petunjuk Penggunaan:                                                                      -->
+            <!-- 1. Buka File Explorer di laptop/komputer Anda.                                            -->
+            <!-- 2. Buka folder website tempat file foto berada.                       -->
+            <!-- 3. Klik kanan pada file foto anak -> Pilih "Copy as path" (Salin sebagai jalur).          -->
+            <!-- 4. Tempelkan (Paste) di dalam tanda petik ("...") pada nomor anak yang sesuai di bawah ini.-->
+            <!--                                                                                           -->
+            <!-- Catatan:                                                                                  -->
+            <!-- * Tanda kutip ("..."), backslash (\), maupun path Windows lengkap (C:\Users\...)         -->
+            <!--   akan OTOMATIS dibersihkan oleh sistem sehingga foto pasti muncul rapi!                  -->
+            <!-- * Anda juga bisa langsung mengganti atribut src="..." pada tag <img> di masing-masing kartu.-->
+            <!-- ========================================================================================= -->
+            <script>
+                // DAFTAR PATH FOTO 36 ANAK ASUH
+                // Silakan copy-paste path foto anak di sini (contoh: "afnan.jpg" atau path Windows)
+                const FOTO_ANAK_ASUH = {
+                    1: "gibran.jpg",       // No. 01 - ABIZAR AL GIFAHRI NASUTION
+                    2: "afnan.jpg",        // No. 02 - AFNAN FAIZAH
+                    3: "aini.jpg",         // No. 03 - AINI CAHAYA DWI EKANOV
+                    4: "andara.jpg",       // No. 04 - ANDARA KIRANA
+                    5: "indah.jpg",        // No. 05 - ANJENG INDAH ROSMAWATI
+                    6: "aini.jpg",         // No. 06 - ASKHINA NURAINI
+                    7: "azzam.jpg",        // No. 07 - FADLI AIDIL MAULIDAN
+                    8: "HAFIZ.jpg",        // No. 08 - FATHAN ARASYID
+                    9: "afnan.jpg",        // No. 09 - FREYA HAFIDZAH PITMAN
+                    10: "salsa.jpg",       // No. 10 - IKHSANIA NURISYAWAL
+                    11: "andara.jpg",      // No. 11 - KANAYA MAYSURY
+                    12: "helmi.jpg",       // No. 12 - LORENZO RICH ARTHUR IBRAHIM
+                    13: "raymond.jpg",     // No. 13 - MUHAMMAD FADLAN MUTTAQIN
+                    14: "rizki.jpg",       // No. 14 - MUHAMMAD FANDI ARDIANSYAH
+                    15: "syafii.jpg",      // No. 15 - MUHAMAD ADITIYA APANDI
+                    16: "fahri.jpg",       // No. 16 - MUHAMAD FAHRI ASHAR
+                    17: "HAFIZ.jpg",       // No. 17 - MUHAMAD HAFIZ AL MA'RUF
+                    18: "syafii.jpg",      // No. 18 - MUHAMMAD ABDULLAH SYAFI.I
+                    19: "gibran.jpg",      // No. 19 - MUHAMMAD ALIF ALIKHSAN
+                    20: "azzam.jpg",       // No. 20 - MUHAMMAD FIRDAUS
+                    21: "azzam.jpg",       // No. 21 - MUHAMMAD AZZAM FIRDAUS
+                    22: "elgibran.jpg",    // No. 22 - MUHAMMAD ELGIBRAN NAYAKA
+                    23: "helmi.jpg",       // No. 23 - MUHAMMAD FIKRI SAPUTRA
+                    24: "helmi.jpg",       // No. 24 - MUHAMMAD HELMI
+                    25: "raymond.jpg",     // No. 25 - MUHAMMAD RAYMOND TAQI
+                    26: "rizki.jpg",       // No. 26 - MUHAMMAD RIZKI FADILLAH
+                    27: "nabila.jpg",      // No. 27 - NABILA SUHERMAN
+                    28: "fahri.jpg",       // No. 28 - NOVAL ANIFATUL NUGRAHA
+                    29: "indah.jpg",       // No. 29 - NUR AISYAH PUTRI NASUTION
+                    30: "nurwamadatul.jpg",// No. 30 - NURMAWADUL AZIZAH
+                    31: "raisha.jpg",      // No. 31 - PUTRI MAWAR FADILAH
+                    32: "raisha.jpg",      // No. 32 - RAISHA PRATIWI
+                    33: "nurwamadatul.jpg",// No. 33 - REISYA AULIA AFANDI
+                    34: "HAFIZ.jpg",       // No. 34 - RAYYAN SABBIQ EL FATHIN
+                    35: "rizki.jpg",       // No. 35 - RIZKY RAMADHAN
+                    36: "salsa.jpg"        // No. 36 - SALSABILA AZKA TALITHA
+                };
+            </script>
+
+            <!-- Kanvas Grid Khusus Foto Anak Asuh (36 Anak) -->
+            <div class="canvas-grid-children reveal" id="childrenGridContainer">
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 1 - ABIZAR AL GIFAHRI NASUTION -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="ABIZAR AL GIFAHRI NASUTION">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 01</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 1: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild1" class="child-photo-img" src="gibran.jpg" alt="Foto ABIZAR AL GIFAHRI NASUTION">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(1, 'ABIZAR AL GIFAHRI NASUTION')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">ABIZAR AL GIFAHRI NASUTION</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">03/04/2022</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 2 - AFNAN FAIZAH -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="AFNAN FAIZAH">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 02</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 2: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild2" class="child-photo-img" src="afnan.jpg" alt="Foto AFNAN FAIZAH">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(2, 'AFNAN FAIZAH')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">AFNAN FAIZAH</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">BATANG</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">22/11/2018</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 3 - AINI CAHAYA DWI EKANOV -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="AINI CAHAYA DWI EKANOV">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 03</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 3: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild3" class="child-photo-img" src="aini.jpg" alt="Foto AINI CAHAYA DWI EKANOV">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(3, 'AINI CAHAYA DWI EKANOV')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">AINI CAHAYA DWI EKANOV</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">CIREBON</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">21/11/2013</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 4 - ANDARA KIRANA -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="ANDARA KIRANA">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 04</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 4: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild4" class="child-photo-img" src="andara.jpg" alt="Foto ANDARA KIRANA">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(4, 'ANDARA KIRANA')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">ANDARA KIRANA</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">24/11/2016</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 5 - ANJENG INDAH ROSMAWATI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="ANJENG INDAH ROSMAWATI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 05</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 5: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild5" class="child-photo-img" src="indah.jpg" alt="Foto ANJENG INDAH ROSMAWATI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(5, 'ANJENG INDAH ROSMAWATI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">ANJENG INDAH ROSMAWATI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">CIREBON</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">18/01/2018</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 6 - ASKHINA NURAINI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="ASKHINA NURAINI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 06</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 6: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild6" class="child-photo-img" src="aini.jpg" alt="Foto ASKHINA NURAINI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(6, 'ASKHINA NURAINI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">ASKHINA NURAINI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">02/03/2013</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 7 - FADLI AIDIL MAULIDAN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="FADLI AIDIL MAULIDAN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 07</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 7: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild7" class="child-photo-img" src="azzam.jpg" alt="Foto FADLI AIDIL MAULIDAN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(7, 'FADLI AIDIL MAULIDAN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">FADLI AIDIL MAULIDAN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">DEPOK</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">21/10/2021</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 8 - FATHAN ARASYID -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="FATHAN ARASYID">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 08</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 8: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild8" class="child-photo-img" src="HAFIZ.jpg" alt="Foto FATHAN ARASYID">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(8, 'FATHAN ARASYID')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">FATHAN ARASYID</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">10/04/2011</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 9 - FREYA HAFIDZAH PITMAN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="FREYA HAFIDZAH PITMAN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 09</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 9: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild9" class="child-photo-img" src="afnan.jpg" alt="Foto FREYA HAFIDZAH PITMAN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(9, 'FREYA HAFIDZAH PITMAN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">FREYA HAFIDZAH PITMAN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">16/07/2013</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 10 - IKHSANIA NURISYAWAL -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="IKHSANIA NURISYAWAL">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 10</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 10: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild10" class="child-photo-img" src="salsa.jpg" alt="Foto IKHSANIA NURISYAWAL">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(10, 'IKHSANIA NURISYAWAL')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">IKHSANIA NURISYAWAL</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">08/06/2019</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 11 - KANAYA MAYSURY -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="KANAYA MAYSURY">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 11</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 11: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild11" class="child-photo-img" src="andara.jpg" alt="Foto KANAYA MAYSURY">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(11, 'KANAYA MAYSURY')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">KANAYA MAYSURY</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">27/11/2011</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 12 - LORENZO RICH ARTHUR IBRAHIM -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="LORENZO RICH ARTHUR IBRAHIM">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 12</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 12: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild12" class="child-photo-img" src="helmi.jpg" alt="Foto LORENZO RICH ARTHUR IBRAHIM">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(12, 'LORENZO RICH ARTHUR IBRAHIM')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">LORENZO RICH ARTHUR IBRAHIM</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">15/10/2010</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 13 - MUHAMMAD FADLAN MUTTAQIN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD FADLAN MUTTAQIN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 13</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 13: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild13" class="child-photo-img" src="raymond.jpg" alt="Foto MUHAMMAD FADLAN MUTTAQIN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(13, 'MUHAMMAD FADLAN MUTTAQIN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD FADLAN MUTTAQIN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">BOGOR</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">22/10/2018</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 14 - MUHAMMAD FANDI ARDIANSYAH -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD FANDI ARDIANSYAH">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 14</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 14: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild14" class="child-photo-img" src="rizki.jpg" alt="Foto MUHAMMAD FANDI ARDIANSYAH">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(14, 'MUHAMMAD FANDI ARDIANSYAH')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD FANDI ARDIANSYAH</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">TEGAL</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">21/04/2010</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 15 - MUHAMAD ADITIYA APANDI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMAD ADITIYA APANDI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 15</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 15: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild15" class="child-photo-img" src="syafii.jpg" alt="Foto MUHAMAD ADITIYA APANDI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(15, 'MUHAMAD ADITIYA APANDI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMAD ADITIYA APANDI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">BEKASI</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">04/11/2012</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 16 - MUHAMAD FAHRI ASHAR -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMAD FAHRI ASHAR">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 16</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 16: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild16" class="child-photo-img" src="fahri.jpg" alt="Foto MUHAMAD FAHRI ASHAR">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(16, 'MUHAMAD FAHRI ASHAR')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMAD FAHRI ASHAR</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">TEGAL</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">27/08/2019</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 17 - MUHAMAD HAFIZ AL MA'RUF -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMAD HAFIZ AL MA'RUF">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 17</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 17: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild17" class="child-photo-img" src="HAFIZ.jpg" alt="Foto MUHAMAD HAFIZ AL MA'RUF">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(17, 'MUHAMAD HAFIZ AL MA\'RUF')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMAD HAFIZ AL MA'RUF</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">25/05/2016</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 18 - MUHAMMAD ABDULLAH SYAFI.I -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD ABDULLAH SYAFI.I">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 18</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 18: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild18" class="child-photo-img" src="syafii.jpg" alt="Foto MUHAMMAD ABDULLAH SYAFI.I">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(18, 'MUHAMMAD ABDULLAH SYAFI.I')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD ABDULLAH SYAFI.I</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">11/02/2021</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 19 - MUHAMMAD ALIF ALIKHSAN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD ALIF ALIKHSAN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 19</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 19: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild19" class="child-photo-img" src="gibran.jpg" alt="Foto MUHAMMAD ALIF ALIKHSAN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(19, 'MUHAMMAD ALIF ALIKHSAN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD ALIF ALIKHSAN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">17/09/2024</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 20 - MUHAMMAD FIRDAUS -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD FIRDAUS">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 20</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 20: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild20" class="child-photo-img" src="azzam.jpg" alt="Foto MUHAMMAD FIRDAUS">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(20, 'MUHAMMAD FIRDAUS')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD FIRDAUS</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">27/08/2010</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 21 - MUHAMMAD AZZAM FIRDAUS -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD AZZAM FIRDAUS">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 21</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 21: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild21" class="child-photo-img" src="azzam.jpg" alt="Foto MUHAMMAD AZZAM FIRDAUS">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(21, 'MUHAMMAD AZZAM FIRDAUS')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD AZZAM FIRDAUS</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">25/04/2016</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 22 - MUHAMMAD ELGIBRAN NAYAKA -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD ELGIBRAN NAYAKA">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 22</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 22: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild22" class="child-photo-img" src="elgibran.jpg" alt="Foto MUHAMMAD ELGIBRAN NAYAKA">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(22, 'MUHAMMAD ELGIBRAN NAYAKA')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD ELGIBRAN NAYAKA</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">02/12/2017</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 23 - MUHAMMAD FIKRI SAPUTRA -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD FIKRI SAPUTRA">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 23</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 23: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild23" class="child-photo-img" src="helmi.jpg" alt="Foto MUHAMMAD FIKRI SAPUTRA">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(23, 'MUHAMMAD FIKRI SAPUTRA')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD FIKRI SAPUTRA</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">27/07/2008</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 24 - MUHAMMAD HELMI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD HELMI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 24</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 24: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild24" class="child-photo-img" src="helmi.jpg" alt="Foto MUHAMMAD HELMI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(24, 'MUHAMMAD HELMI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD HELMI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">18/03/2012</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 25 - MUHAMMAD RAYMOND TAQI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD RAYMOND TAQI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 25</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 25: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild25" class="child-photo-img" src="raymond.jpg" alt="Foto MUHAMMAD RAYMOND TAQI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(25, 'MUHAMMAD RAYMOND TAQI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD RAYMOND TAQI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">23/01/2015</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 26 - MUHAMMAD RIZKI FADILLAH -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="MUHAMMAD RIZKI FADILLAH">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 26</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 26: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild26" class="child-photo-img" src="rizki.jpg" alt="Foto MUHAMMAD RIZKI FADILLAH">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(26, 'MUHAMMAD RIZKI FADILLAH')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">MUHAMMAD RIZKI FADILLAH</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">24/02/2016</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 27 - NABILA SUHERMAN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="NABILA SUHERMAN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 27</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 27: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild27" class="child-photo-img" src="nabila.jpg" alt="Foto NABILA SUHERMAN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(27, 'NABILA SUHERMAN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">NABILA SUHERMAN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">BOGOR</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">04/12/2012</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 28 - NOVAL ANIFATUL NUGRAHA -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="NOVAL ANIFATUL NUGRAHA">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 28</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 28: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild28" class="child-photo-img" src="fahri.jpg" alt="Foto NOVAL ANIFATUL NUGRAHA">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(28, 'NOVAL ANIFATUL NUGRAHA')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">NOVAL ANIFATUL NUGRAHA</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">WONOSARI</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">22/12/2008</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 29 - NUR AISYAH PUTRI NASUTION -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="NUR AISYAH PUTRI NASUTION">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 29</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 29: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild29" class="child-photo-img" src="indah.jpg" alt="Foto NUR AISYAH PUTRI NASUTION">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(29, 'NUR AISYAH PUTRI NASUTION')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">NUR AISYAH PUTRI NASUTION</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">13/03/2021</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 30 - NURMAWADUL AZIZAH -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="NURMAWADUL AZIZAH">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 30</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 30: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild30" class="child-photo-img" src="nurwamadatul.jpg" alt="Foto NURMAWADUL AZIZAH">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(30, 'NURMAWADUL AZIZAH')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">NURMAWADUL AZIZAH</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">TEGAL</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">27/09/2014</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 31 - PUTRI MAWAR FADILAH -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="PUTRI MAWAR FADILAH">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 31</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 31: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild31" class="child-photo-img" src="raisha.jpg" alt="Foto PUTRI MAWAR FADILAH">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(31, 'PUTRI MAWAR FADILAH')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">PUTRI MAWAR FADILAH</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">WONOSARI</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">16/06/2005</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 32 - RAISHA PRATIWI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="RAISHA PRATIWI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 32</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 32: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild32" class="child-photo-img" src="raisha.jpg" alt="Foto RAISHA PRATIWI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(32, 'RAISHA PRATIWI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">RAISHA PRATIWI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">23/05/2014</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 33 - REISYA AULIA AFANDI -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="REISYA AULIA AFANDI">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 33</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 33: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild33" class="child-photo-img" src="nurwamadatul.jpg" alt="Foto REISYA AULIA AFANDI">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(33, 'REISYA AULIA AFANDI')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">REISYA AULIA AFANDI</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">02/07/2008</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 34 - RAYYAN SABBIQ EL FATHIN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="RAYYAN SABBIQ EL FATHIN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 34</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 34: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild34" class="child-photo-img" src="HAFIZ.jpg" alt="Foto RAYYAN SABBIQ EL FATHIN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(34, 'RAYYAN SABBIQ EL FATHIN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">RAYYAN SABBIQ EL FATHIN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">BOGOR</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">28/07/2015</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 35 - RIZKY RAMADHAN -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="lk" data-name="RIZKY RAMADHAN">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 35</span>
+                        <span class="child-gender-badge lk"><i class="fas fa-mars"></i> Laki-laki (LK)</span>
+                        <!-- GANTI FOTO ANAK NO. 35: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild35" class="child-photo-img" src="rizki.jpg" alt="Foto RIZKY RAMADHAN">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(35, 'RIZKY RAMADHAN')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">RIZKY RAMADHAN</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">11/08/2010</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Laki-laki (LK)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- ANAK ASUH NO. 36 - SALSABILA AZKA TALITHA -->
+                <!-- ============================================== -->
+                <div class="canvas-child-card" data-gender="pr" data-name="SALSABILA AZKA TALITHA">
+                    <div class="child-canvas-frame">
+                        <span class="child-number-badge">No. 36</span>
+                        <span class="child-gender-badge pr"><i class="fas fa-venus"></i> Perempuan (PR)</span>
+                        <!-- GANTI FOTO ANAK NO. 36: Tempelkan path foto di src="" di bawah ini (atau di FOTO_ANAK_ASUH di atas) -->
+                        <img id="imgChild36" class="child-photo-img" src="salsa.jpg" alt="Foto SALSABILA AZKA TALITHA">
+                        <div class="canvas-inner-placeholder">
+                            <i class="fas fa-child-dress"></i>
+                            <span>Foto Belum Diatur</span>
+                        </div>
+                        <!-- Tombol Ganti Foto (Hanya Aktif untuk Admin & Owner) -->
+                        <button type="button" class="btn-change-photo-admin" onclick="openChildPhotoModal(36, 'SALSABILA AZKA TALITHA')" title="Ganti Foto Anak Asuh">
+                            <i class="fas fa-camera"></i> Ganti Foto
+                        </button>
+                    </div>
+                    <div class="child-card-body">
+                        <h5 class="child-name-heading">SALSABILA AZKA TALITHA</h5>
+                        <div class="child-info-list">
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</span>
+                                <span class="val">JAKARTA</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="far fa-calendar-alt"></i> Tanggal Lahir:</span>
+                                <span class="val">19/02/2013</span>
+                            </div>
+                            <div class="child-info-row">
+                                <span class="label"><i class="fas fa-venus-mars"></i> Jenis Kelamin:</span>
+                                <span class="val">Perempuan (PR)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;" class="reveal">
+                <a href="#top" class="btn btn-outline btn-sm"><i class="fas fa-arrow-up"></i> Kembali ke Atas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BAGIAN 4: STATISTIK BINAAN -->
+    <section id="statistik" class="section-padding" style="background: var(--primary-light);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Data Penerima Manfaat & Binaan</h2>
+                <p>Rincian jumlah anak asuh dan peserta didik yang berada dalam naungan Yayasan Kuntum Teratai.</p>
+            </div>
+
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <h3>36</h3>
+                    <p>Anak Asuh Panti</p>
+                </div>
+                <div class="stat-card">
+                    <h3>25</h3>
+                    <p>Anak Non-Panti (Daycare)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>17</h3>
+                    <p>Peserta Didik RA</p>
+                </div>
+                <div class="stat-card">
+                    <h3>30</h3>
+                    <p>Peserta Didik TPA</p>
+                </div>
+                <div class="stat-card">
+                    <h3>10</h3>
+                    <p>Peserta Didik PAUD</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;" class="reveal">
+                <a href="index.html#donasi" class="btn btn-primary"><i class="fas fa-heart"></i> Dukung Masa Depan Mereka</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL GANTI FOTO ANAK ASUH (KHUSUS ADMIN & OWNER) -->
+    <div id="adminChildPhotoModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(18,11,33,0.75); z-index:2000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px);">
+        <div class="modal-box" style="background:#fff; border-radius:18px; max-width:480px; width:100%; padding:30px; box-shadow:0 15px 45px rgba(0,0,0,0.2); position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #EFE9F6; padding-bottom:12px;">
+                <div>
+                    <h3 style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--primary-purple); margin-bottom:2px;">Ganti Foto Anak Asuh</h3>
+                    <p id="modalChildSub" style="font-size:0.82rem; color:var(--text-light);">No. 01 - Nama Anak</p>
+                </div>
+                <button type="button" onclick="closeChildPhotoModal()" style="background:none; border:none; font-size:1.6rem; color:#999; cursor:pointer;">&times;</button>
+            </div>
+
+            <!-- Area Unggah / Preview -->
+            <div style="text-align:center; margin-bottom:20px;">
+                <div style="width:160px; height:160px; border-radius:14px; overflow:hidden; border:2px dashed #C5B9DB; margin:0 auto 15px; background:#F8F5FC; display:flex; align-items:center; justify-content:center;">
+                    <img id="adminChildPreviewImg" src="" alt="Preview" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    <div id="adminChildPlaceholderText" style="color:#A396C2; font-size:0.85rem; padding:10px;">
+                        <i class="fas fa-camera" style="font-size:2rem; display:block; margin-bottom:6px;"></i>
+                        Pilih foto baru
+                    </div>
+                </div>
+                <input type="file" id="adminChildFileInput" accept="image/*" style="display:none;" onchange="previewChildPhoto(event)">
+                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('adminChildFileInput').click()">
+                    <i class="fas fa-folder-open"></i> Pilih Berkas Foto dari HP/Laptop
+                </button>
+            </div>
+
+            <div id="childUploadProgress" style="display:none; text-align:center; font-size:0.85rem; color:var(--accent-pink); margin-bottom:15px;">
+                <i class="fas fa-spinner fa-spin"></i> Mengompres dan menyimpan foto...
+            </div>
+
+            <div style="display:flex; gap:10px; justify-content:flex-end; border-top:1px solid #EFE9F6; padding-top:15px;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeChildPhotoModal()">Batal</button>
+                <button type="button" id="btnSaveChildPhoto" class="btn btn-primary btn-sm" onclick="saveAdminChildPhoto()">
+                    <i class="fas fa-save"></i> Simpan Foto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="Screenshot 2026-10-25 185825.png" alt="Logo Kuntum Teratai">
+                    <p>Yayasan Kuntum Teratai adalah lembaga sosial yang berdedikasi untuk menaungi anak asuh dan lansia di bantaran Sungai Ciliwung, Jakarta Selatan.</p>
+                    <p style="margin-top: 15px; font-style: italic; color: var(--accent-gold);">"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya"</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="index.html#tentang">Tentang Kami</a></li>
+                        <li><a href="index.html#layanan">Layanan</a></li>
+                        <li><a href="index.html#program">Program</a></li>
+                        <li><a href="index.html#donasi">Donasi</a></li>
+                        <li><a href="pengurus.html">Pengurus & Anak Asuh</a></li>
+                        <li><a href="galeri.html">Galeri</a></li>
+                        <li><a href="login.html" style="color:var(--accent-pink); font-weight:500;"><i class="fas fa-lock"></i> Portal Pengurus</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legalitas</h4>
+                    <ul>
+                        <li><a href="#">SK Kemenkumham No. AHU-0000784.AH.01.05 Tahun 2024</a></li>
+                        <li><a href="#">Izin Dinas Sosial No. 1/F.3/31.74.01.1005.03.015.R.4/4/-1.848/e/2022</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yayasan Kuntum Teratai. All Rights Reserved. | Dibuat dengan <i class="fas fa-heart" style="color: var(--accent-pink);"></i> untuk sesama.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Menu Mobile
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+
+        // ========================================================
+        // PENGELOLAAN & PEMUATAN FOTO ANAK ASUH
+        // ========================================================
+        let activeAdminChildId = null;
+        let activeAdminChildName = null;
+        let selectedChildFile = null;
+
+        // Fungsi pembersih path foto otomatis (mendukung copy as path Windows, quotes, backslash, dll)
+        function cleanChildPhotoPath(raw) {
+            if (!raw || typeof raw !== 'string') return '';
+
+            // 1. Bersihkan spasi dan tanda kutip ganda / tunggal dari hasil "Copy as path"
+            let p = raw.trim().replace(/^["']+|["']+$/g, '');
+            if (!p) return '';
+
+            // 2. Ubah Windows backslash (\) menjadi web forward slash (/)
+            p = p.replace(/\\/g, '/');
+
+            // 3. Jika pengguna meng-copy absolute path Windows, ambil nama filenya langsung
+            if (p.includes('/')) {
+                const parts = p.split('/');
+                p = parts[parts.length - 1];
+            }
+
+            return p;
+        }
+
+        // Terapkan foto anak asuh ke seluruh 36 kartu
+        function renderAllChildPhotos() {
+            for (let i = 1; i <= 36; i++) {
+                const img = document.getElementById('imgChild' + i);
+                if (!img) continue;
+
+                // Ambil path foto: utamakan dari daftar FOTO_ANAK_ASUH jika ada, atau dari atribut src img di HTML
+                let rawSrc = '';
+                if (typeof FOTO_ANAK_ASUH !== 'undefined' && FOTO_ANAK_ASUH[i]) {
+                    rawSrc = FOTO_ANAK_ASUH[i];
+                } else {
+                    rawSrc = img.getAttribute('src') || '';
+                }
+
+                const validSrc = cleanChildPhotoPath(rawSrc);
+                const placeholder = img.nextElementSibling;
+
+                function showImage() {
+                    img.classList.remove('img-hidden');
+                    img.style.display = 'block';
+                    if (placeholder && placeholder.classList.contains('canvas-inner-placeholder')) {
+                        placeholder.style.display = 'none';
+                    }
+                }
+
+                function hideImage() {
+                    img.classList.add('img-hidden');
+                    img.style.display = 'none';
+                    if (placeholder && placeholder.classList.contains('canvas-inner-placeholder')) {
+                        placeholder.style.display = 'flex';
+                    }
+                }
+
+                if (validSrc) {
+                    img.onload = showImage;
+                    img.onerror = hideImage;
+                    img.src = validSrc;
+
+                    // Jika gambar sudah selesai dimuat dari cache browser
+                    if (img.complete) {
+                        if (img.naturalWidth > 0) {
+                            showImage();
+                        }
+                    }
+                } else {
+                    hideImage();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAllChildPhotos();
+            initChildPhotosAndAuth();
+        });
+
+        async function initChildPhotosAndAuth() {
+            // Cek apakah pengguna saat ini login sebagai admin (sessionStorage atau Supabase Auth)
+            const isAdminSession = sessionStorage.getItem('isAdminLoggedIn') === 'true' || 
+                                   sessionStorage.getItem('kt_admin_auth') === 'authenticated';
+
+            let isAuthorized = isAdminSession;
+
+            if (window.supabaseService && !isAuthorized) {
+                try {
+                    const role = await window.supabaseService.getCurrentUserRole();
+                    if (role === 'owner' || role === 'admin') {
+                        isAuthorized = true;
+                    }
+                } catch (e) {}
+            }
+
+            if (isAuthorized) {
+                // Tampilkan banner status pengurus
+                const banner = document.getElementById('adminModeBanner');
+                const roleText = document.getElementById('adminRoleText');
+                if (banner && roleText) {
+                    banner.style.display = 'flex';
+                    roleText.textContent = 'ADMIN';
+                }
+                // Tampilkan tombol "Ganti Foto" di setiap kartu anak asuh
+                document.querySelectorAll('.btn-change-photo-admin').forEach(btn => {
+                    btn.style.display = 'inline-flex';
+                });
+            }
+        }
+
+        async function openChildPhotoModal(childId, childName) {
+            // Verifikasi hak akses sebelum membuka modal
+            const isAdminSession = sessionStorage.getItem('isAdminLoggedIn') === 'true' || 
+                                   sessionStorage.getItem('kt_admin_auth') === 'authenticated';
+            let isAuthorized = isAdminSession;
+            if (!isAuthorized && window.supabaseService) {
+                try {
+                    const role = await window.supabaseService.getCurrentUserRole();
+                    if (role === 'owner' || role === 'admin') isAuthorized = true;
+                } catch(e) {}
+            }
+
+            if (!isAuthorized) {
+                alert('Akses Ditolak: Hanya Admin atau Owner yang memiliki hak untuk mengganti foto anak asuh.');
+                return;
+            }
+
+            activeAdminChildId = childId;
+            activeAdminChildName = childName;
+            selectedChildFile = null;
+
+            document.getElementById('modalChildSub').textContent = `No. ${childId.toString().padStart(2, '0')} - ${childName}`;
+            document.getElementById('adminChildFileInput').value = '';
+            
+            const existingImg = document.getElementById('imgChild' + childId);
+            const previewImg = document.getElementById('adminChildPreviewImg');
+            const placeholder = document.getElementById('adminChildPlaceholderText');
+
+            if (existingImg && existingImg.src && !existingImg.src.endsWith('/')) {
+                previewImg.src = existingImg.src;
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                previewImg.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
+
+            document.getElementById('adminChildPhotoModal').style.display = 'flex';
+        }
+
+        function closeChildPhotoModal() {
+            document.getElementById('adminChildPhotoModal').style.display = 'none';
+            activeAdminChildId = null;
+            selectedChildFile = null;
+        }
+
+        function previewChildPhoto(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            selectedChildFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const previewImg = document.getElementById('adminChildPreviewImg');
+                const placeholder = document.getElementById('adminChildPlaceholderText');
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function saveAdminChildPhoto() {
+            // Verifikasi hak akses sekali lagi sebelum menyimpan
+            const isAdminSession = sessionStorage.getItem('isAdminLoggedIn') === 'true' || 
+                                   sessionStorage.getItem('kt_admin_auth') === 'authenticated';
+            let isAuthorized = isAdminSession;
+            if (!isAuthorized && window.supabaseService) {
+                try {
+                    const role = await window.supabaseService.getCurrentUserRole();
+                    if (role === 'owner' || role === 'admin') isAuthorized = true;
+                } catch(e) {}
+            }
+
+            if (!isAuthorized) {
+                alert('Akses Ditolak: Tindakan tidak diizinkan untuk publik.');
+                return;
+            }
+
+            if (!selectedChildFile) {
+                alert('Pilih berkas foto terlebih dahulu.');
+                return;
+            }
+
+            const btn = document.getElementById('btnSaveChildPhoto');
+            const progress = document.getElementById('childUploadProgress');
+            btn.disabled = true;
+            progress.style.display = 'block';
+
+            try {
+                let photoUrl = '';
+                let storagePath = null;
+
+                if (window.supabaseService.isConfigured()) {
+                    // Upload ke Supabase Storage dalam folder anak-asuh
+                    const uploadRes = await window.supabaseService.uploadPhoto(selectedChildFile, 'anak-asuh');
+                    photoUrl = uploadRes.photo_url;
+                    storagePath = uploadRes.storage_path;
+                } else {
+                    // Fallback dataURL lokal
+                    photoUrl = document.getElementById('adminChildPreviewImg').src;
+                }
+
+                // Simpan ke database / storage lokal
+                await window.supabaseService.saveChildPhoto(activeAdminChildId, photoUrl, storagePath);
+
+                // Perbarui foto langsung di DOM
+                const img = document.getElementById('imgChild' + activeAdminChildId);
+                if (img) {
+                    img.src = photoUrl;
+                    img.classList.add('active-photo');
+                    img.style.display = 'block';
+                    if (img.nextElementSibling) img.nextElementSibling.style.display = 'none';
+                }
+
+                alert(`Foto profil untuk "${activeAdminChildName}" berhasil diperbarui!`);
+                closeChildPhotoModal();
+
+            } catch (err) {
+                console.error(err);
+                alert('Gagal menyimpan foto: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                progress.style.display = 'none';
+            }
+        }
+
+        // Filter Gender & Pencarian
+        let currentGenderFilter = 'all';
+
+        function filterChildren(gender, btn) {
+            currentGenderFilter = gender;
+            document.querySelectorAll('.btn-filter-child').forEach(b => {
+                b.style.background = '#F4EFF9';
+                b.style.color = 'var(--primary-purple)';
+            });
+            btn.style.background = 'var(--primary-purple)';
+            btn.style.color = '#fff';
+            applyChildrenFilter();
+        }
+
+        function searchChildren() {
+            applyChildrenFilter();
+        }
+
+        function applyChildrenFilter() {
+            const query = (document.getElementById('childSearchInput').value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.canvas-child-card');
+
+            cards.forEach(card => {
+                const cardGender = card.getAttribute('data-gender');
+                const cardName = (card.getAttribute('data-name') || '').toLowerCase();
+
+                const matchGender = (currentGenderFilter === 'all' || cardGender === currentGenderFilter);
+                const matchSearch = (!query || cardName.includes(query));
+
+                if (matchGender && matchSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
